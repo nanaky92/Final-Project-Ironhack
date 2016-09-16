@@ -1,0 +1,17 @@
+<%@users.each do |user|%>
+  <p>
+  <ul>
+    <li><%=user.name%></li>
+    <li><%=user.email%></li>
+      <!-- if user is admin -->
+    <li><%= link_to "Delete user", "/users/#{@user.id}/groups/#{@group.id}/delete_user"%></li>
+  </ul>
+   
+  
+  </p>
+<%end%>
+
+  <!-- if user is admin -->
+<p><%= link_to "Invite users", "/users/#{@user.id}/groups/#{@group.id}/invite_users" %></p>
+
+<p><%= link_to "Create event", "/users/#{@user.id}/groups/#{@group.id}/events/new" %></p>
