@@ -1,0 +1,9 @@
+<%@groups.each do |group| %>
+  <p>
+    <%=link_to( group.name, "/groups/#{group.id}")%>
+    <%=link_to("Exit group", "/groups/#{group.id}/exit")%>
+  </p>
+
+<%end%>
+
+<p><%=link_to( "Create group", "/groups/new")%></p>

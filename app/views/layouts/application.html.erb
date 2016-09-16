@@ -9,6 +9,21 @@
   </head>
 
   <body>
+
+  <div id="top_bar">
+    <% if user_signed_in? %>
+      <p>Hello,  <%= current_user.name %> - 
+      <%= link_to 'Log out', destroy_user_session_path, method: 'DELETE' %></p>
+    <% elsif params[:controller].split("/")[0] != "devise" %>
+      <p>
+          <%= link_to 'Sign up', new_user_registration_path %> |
+          <%= link_to 'Log in', new_user_session_path %>
+      </p>
+    <% end %>
+  </div>
+
+  <p class="notice"><%= notice %></p>
+  <p class="alert"><%= alert %></p>
     <%= yield %>
   </body>
 </html>

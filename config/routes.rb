@@ -3,23 +3,24 @@ Rails.application.routes.draw do
   # resources :groups
   # resources :users
 
-  get "users/:id", to: "users#index"
+  get "/groups/", to: "groups#index"
+  post "/groups/", to: "groups#create", as: "create_group"
 
-  get "users/:id/groups/new", to: "groups#new"
-  get "users/:id/groups/:group_id", to: "groups#index"
+  get "/groups/new", to: "groups#new"
 
-  get "users/:id/groups/:group_id/exit", to: "groups#exit"
-  get "/users/:id/groups/:group_id/invite_users", to: "groups#invite_user"
-  get "/users/:id/groups/:group_id/delete_user", to: "groups#delete_user"
+  get "/groups/:group_id", to: "groups#show"
 
-  # root to: "devise/sessions#new"
-  # get "/", to: "devise/sessions#new"
+  get "/groups/:group_id/exit", to: "groups#exit"
+  get "/groups/:group_id/invite_users", to: "groups#invite_user"
+  get "/groups/:group_id/delete_user", to: "groups#delete_user"
+
+
 
   devise_scope :user do 
-    get "/" => "devise/registrations#new" 
-  
-    # get "/" => "users#index" 
+    get "/" => "users#show" 
   end
 
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  get "/", to: "users#show"
+
+
 end
