@@ -1,7 +1,8 @@
 <%@groups.each do |group| %>
   <p>
     <%=link_to( group.name, "/groups/#{group.id}")%>
-    <%=link_to("Exit group", "/groups/#{group.id}/exit")%>
+    <%=link_to("Exit group", "/groups/#{group.id}/delete_user")%>
+    <%=link_to("Delete group", "/groups/#{group.id}/delete_group")%>
   </p>
 
 <%end%>
