@@ -1,6 +1,6 @@
 <h2>New Group</h2>
 
-<%= form_for(@group) do |f| %>
+<%= form_for(@group, url: create_group_url) do |f| %>
 
   <div class="field">
     <%= f.label :name %>
