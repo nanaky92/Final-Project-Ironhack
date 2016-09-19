@@ -26,5 +26,5 @@ production:
  pool: 5
  database: coodle-hackshow_production
  username: coodle-hackshow
- password: <%= ENV['COODLE-HACKSHOW_DATABASE_PASSWORD'] %>
+ password: <%= ENV['SECRET_KEY_BASE'] %>
 
