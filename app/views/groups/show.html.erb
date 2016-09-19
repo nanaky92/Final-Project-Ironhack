@@ -1,20 +1,28 @@
+<h2>Group <%=@group.name%></h2>
+<h3>Users:</h3>
+
 <%@users.each do |user|%>
   <p>
     <ul>
       <li><%=user.name%></li>
       <li><%=user.email%></li>
-        <!-- if user is admin -->
-      <% if (@isUserAdmin) %>
-        <li><%= link_to "Delete user", "/groups/#{@group.id}/delete_user"%></li>
+      <% if (@isUserAdmin && user != @group.admin) %>
+        <li><%= link_to "Delete user", delete_user_from_group_url(@group.id)%></li>
+        <!-- test -->
       <% end %>
     </ul>
   </p>
 <%end%>
 
-  <!-- if user is admin -->
-<% if (@isUserAdmin) %>
-  <p><%= link_to "Invite users", "/groups/#{@group.id}/invite_users" %></p>
+<h3>Admin</h3>
+
+<ul>
+  <li><%=@group.admin.name%></li>
+  <li><%=@group.admin.email%></li>
+</ul>
+
+
+<% if(@isUserAdmin) %>
+  <p><%= link_to "Invite users", new_invitation_url(@group.id) %></p>
   <p><%= link_to "Create event", "/groups/#{@group.id}/events/new" %></p>
 <%end%>
-
-<!-- comprobar si funciona -->

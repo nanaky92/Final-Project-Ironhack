@@ -6,7 +6,8 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-groups = Group.create([{name:"Mi comunidad"}, {name:"Ironhack"}])
-users = User.create([{name: "User1", password: "pass1", email: "1@gmail.com"}, 
-  {name: "User2", password: "pass2", email: "2@gmail.com"}, 
-  {name: "User3", password: "pass3", email: "3@gmail.com"}]);
+groups = Group.create([{name:"Mi comunidad"}, {name:"Ironhack"}, {admin_id: 1}])
+users = User.create([{name: "User1", password: 'ironhack', password_confirmation: 'ironhack', email: "i.crespo1992@gmail.com"}, 
+  {name: "User2", password: 'ironhack', password_confirmation: 'ironhack', email: "2@gmail.com"}, 
+  {name: "User3", password: 'ironhack', password_confirmation: 'ironhack', email: "3@gmail.com"}]);
+

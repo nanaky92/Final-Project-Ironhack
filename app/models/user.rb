@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   has_and_belongs_to_many :groups
+
+  has_many :invitations
   # has_many :groups, :class_name => 'Group', :foreign_key => 'user_id'
   # http://www.spacevatican.org/2008/5/6/creating-multiple-associations-with-the-same-table/
 end

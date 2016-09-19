@@ -1,10 +1,38 @@
-<%@groups.each do |group| %>
-  <p>
-    <%=link_to( group.name, "/groups/#{group.id}")%>
-    <%=link_to("Exit group", "/groups/#{group.id}/delete_user")%>
-    <%=link_to("Delete group", "/groups/#{group.id}/delete_group")%>
-  </p>
+<h2>User <%=@user.name%></h2>
 
+<h3>Groups</h3>
+<%if @groups.length == 0%>
+  <p> No groups yet. <%=link_to( "Create your first group", new_group_url)%> </p>
+<%else%>
+  <ul>
+  <%@groups.each do |group| %>
+    <li>
+      <%=link_to( group.name, show_group_url(group.id) )%>
+      <%if(isUserAdmin?(group.id))%>
+        <%=link_to("Delete group", destroy_group_url(group.id))%>
+      <%else%>
+        <%=link_to("Exit group", exit_group_url(group.id), method: "DELETE")%>
+      <%end%>
+    </li>
+  </ul>
+  <%end%>
 <%end%>
 
-<p><%=link_to( "Create group", "/groups/new")%></p>
+<!-- <h3><%=link_to("Pending invitations", "/invitations/" )%></h3> -->
+<h3>Pending invitations</h3>
+<%if @invitations.length == 0 %>
+  <p> No pending invitations </p>
+<%else %>
+  <ul>
+  <%@invitations.each do |invitation| %>
+    <li>
+      <% link = "User " + invitation.user.name + " to group " + invitation.group.name%>
+      <%=link_to(link, "/invitations/" + invitation.id.to_s, method: "DELETE" )%>
+    </li>
+  <%end%>
+  </ul>
+<%end%>
+
+
+<p><%=link_to( "Create group", new_group_url)%></p>
+

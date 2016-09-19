@@ -7,4 +7,8 @@ class ApplicationController < ActionController::Base
       devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
     end
     
+    # def isUserAdmin?(group_id)
+    #   current_user == Group.find(group_id).admin
+    # end
+
 end
