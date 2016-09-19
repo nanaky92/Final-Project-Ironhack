@@ -24,8 +24,7 @@ production:
  adapter: postgresql
  encoding: unicode
  pool: 5
- # database: coodle-hackshow_production
- database: <%= ENV['DATABASE-URL'] %>
- username: coodle-hackshow
- password: <%= ENV['SECRET_KEY_BASE'] %>
+ database: third_production
+ username: third
+ password: <%= ENV['COODLE-HACKSHOW_DATABASE_PASSWORD'] %>
 
