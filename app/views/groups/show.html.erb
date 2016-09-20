@@ -1,28 +1,81 @@
-<h2>Group <%=@group.name%></h2>
-<h3>Users:</h3>
 
-<%@users.each do |user|%>
-  <p>
-    <ul>
-      <li><%=user.name%></li>
-      <li><%=user.email%></li>
-      <% if (@isUserAdmin && user != @group.admin) %>
-        <li><%= link_to "Delete user", delete_user_from_group_url(@group.id)%></li>
-        <!-- test -->
-      <% end %>
-    </ul>
-  </p>
-<%end%>
+<div class="container text-center">
+  <div class="row">
+    <div class="col-md-offset-3 col-md-6 col-xs-offset-2 col-xs-8" >
+      <h3>Group <%=@group.name%></h3>
+    </div>
+  </div>
+  
+  <div class="row" style="margin-top: 3em">
+    <div class="col-md-offset-3 col-md-6 col-xs-offset-2 col-xs-8" >
+      <h3>Users:</h3>    
+    </div>
+  </div>
 
-<h3>Admin</h3>
+  <div class="row" style="margin-top: 1em">
+    <div class="col-md-offset-3 col-md-6 col-xs-offset-2 col-xs-8 img-rounded light-blue-node">
+      <%@users.each do |user|%>
+        <% if (!@isUserAdmin) %>
+          <div class="row" style="margin: 1em">
+            <div class="col-xs-offset-1 col-xs-4 img-rounded light-blue-node" >
+              <%=user.name%>
+            </div>
+            <div class="col-xs-offset-2 col-xs-4 img-rounded light-blue-node" >
+              <%=user.email%>
+            </div>
+          </div> 
+        <% else %>
+          <div class="row" style="margin: 1em">
+            <div class="col-xs-offset-0 col-xs-4" >
+              <%=user.name%>
+            </div>
+            <div class="col-xs-offset-0 col-xs-4" >
+              <%=user.email%>
+            </div>
+            <div class="col-xs-offset-0 col-xs-4" >
+              <% if (user != @group.admin.user) %>
+                <%= link_to "Delete user", delete_user_from_group_url(@group.id)%>
+              <% else %>
+                Admin
+              <% end %>
+            </div>
+          </div> 
+        <% end %>
+      </div>  
+    </div>
+  </div>
+
+  <% if(@isUserAdmin) %>
+    <div class="row" style="margin-top: 1em">
+      <div class="col-md-offset-3 col-md-6 col-xs-offset-2 col-xs-8 img-rounded light-blue-node">
+        <p><%= link_to "Invite users", new_invitation_url(@group.id) %></p>
+        <p><%= link_to "Create event", "/groups/#{@group.id}/events/new" %></p>
+      </div>
+    </div>
+  <%end%>
+
+</div>
+
+<!--       <p>
+        <ul>
+          <li><%=user.name%></li>
+          <li><%=user.email%></li>
+          <% if (@isUserAdmin && user != @group.admin.user) %>
+            <li><%= link_to "Delete user", delete_user_from_group_url(@group.id)%></li>
+            <!-- test 
+          <% end %>
+        </ul>
+      </p>
+    <%end%>
+  </div>
+-->
+<!-- <h3>Admin</h3>
 
 <ul>
-  <li><%=@group.admin.name%></li>
-  <li><%=@group.admin.email%></li>
+  <li><%=@group.admin.user.name%></li>
+  <li><%=@group.admin.user.email%></li>
 </ul>
+ -->
 
 
-<% if(@isUserAdmin) %>
-  <p><%= link_to "Invite users", new_invitation_url(@group.id) %></p>
-  <p><%= link_to "Create event", "/groups/#{@group.id}/events/new" %></p>
-<%end%>
+ <!-- <%= link_to "Go back to your profile", show_user_url  %> -->

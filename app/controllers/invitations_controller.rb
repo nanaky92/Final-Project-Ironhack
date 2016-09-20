@@ -58,7 +58,7 @@ class InvitationsController < ApplicationController
   end
 
   def is_user_admin?(group_id)
-    current_user == Group.find(group_id).admin
+    current_user == Group.find(group_id).admin.user
   end
 
   def existance?(obj)

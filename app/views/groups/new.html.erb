@@ -1,13 +1,26 @@
-<h2>New Group</h2>
-
-<%= form_for(@group, url: create_group_url) do |f| %>
-
-  <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-offset-4 col-xs-4 text-center">
+        <h3>New Group</h3>
+    </div>
   </div>
 
-  <div class="actions">
-    <%= f.submit %>
+  <div class="row" style="margin-top: 1em">
+    <div class="col-xs-offset-4 col-xs-4 text-center img-rounded light-blue-node">
+       <%= form_for(@group, url: create_group_url) do |f| %>
+
+          <div class="field">
+            <%= f.label :name, "Name your new group" %>
+            <%= f.text_field :name %>
+          </div>
+
+          <div class="actions">
+            <%= f.submit %>
+          </div>
+        <% end %>    
+    </div>    
   </div>
-<% end %>
+ 
+      </div>
+  </div>
+</div>

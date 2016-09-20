@@ -10,13 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160918012755) do
+ActiveRecord::Schema.define(version: 20160919102711) do
+
+  create_table "admins", force: :cascade do |t|
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_admins_on_user_id"
+  end
 
   create_table "groups", force: :cascade do |t|
     t.string   "name"
+    t.integer  "admin_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "admin_id"
     t.index ["admin_id"], name: "index_groups_on_admin_id"
   end
 

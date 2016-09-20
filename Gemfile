@@ -55,3 +55,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise'
 gem 'figaro'
 
+# gem 'bootstrap'
+gem 'bootstrap-sass'
+gem 'autoprefixer-rails'
