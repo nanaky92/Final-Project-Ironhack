@@ -29,7 +29,7 @@ Rails.application.routes.draw do
   get "/groups/:group_id/invite_users", to: "invitations#new", as: "new_invitation"
   post "/groups/:group_id/invite_users/:invited_id", to: "invitations#create", as: "invitations"
   
-  delete "/groups/:group_id/delete_user", to: "groups#delete_user", as: "delete_user_from_group"
+  delete "/groups/:group_id/delete_user/:user_id", to: "groups#delete_user", as: "delete_user_from_group"
   delete "/groups/:group_id/exit_group", to: "groups#exit_group", as: "exit_group"
 
   # get "/invitations/", to: "invitations#index"

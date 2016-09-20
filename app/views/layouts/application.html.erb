@@ -11,7 +11,8 @@
   </head>
 
   <body>
-
+    <%= csrf_meta_tag %> 
+    
     <nav role="main" class="navbar navbar-default">
       <div class="container-fluid">
         <div class="row">
@@ -49,7 +50,7 @@
         <div class="row">
           <div class="col-md-4 col-md-offset-4">
             <div class="flash light-blue-node img-rounded text-center"><%= notice %></div>
-            <div class="flash" style="background-color: #c80000"><%= alert %></div>
+            <div class="flash img-rounded text-center" style="background-color: #ffadad"><%= alert %></div>
           </div>
         </div>
       </div>

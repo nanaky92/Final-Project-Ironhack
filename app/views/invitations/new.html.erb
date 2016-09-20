@@ -1,93 +1,35 @@
-<h2>Invite user to <%=@group.name%> </h2>
+<div class="container text-center">
+  <div class="row">
+    <div class="col-md-offset-3 col-md-6 col-xs-offset-2 col-xs-8" >
+      <h3>Hey! Invite somebody to <%=@group.name%> </h3>
+    </div>
+  </div>
 
-<h3>Find user by name</h3>
+  <div class="row">
+    <div class="col-md-offset-3 col-md-6 col-xs-offset-2 col-xs-8 img-rounded light-blue-node">
+    <div class="row">
+        <h3>Find user by name</h3>
+    </div>
 
-<div>
-  <input class="input-name-user" type="text">
-  <!-- <p>Search by email: <input class="input-email-user" type="text"> </p> -->
-  <button class="btn btn-input-user">Submit</button>
+    <div class="row">
+        <input class="input-name-user" type="text">
+        <!-- <p>Search by email: <input class="input-email-user" type="text"> </p> -->
+        <button class="btn btn-input-user">Submit</button>
+    </div>
+
+    <div class="row">
+      <div class="search_results">
+        <p class="length-of-results" style="font-size: 16px"></p>
+        <div class="search-results"></div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-offset-3 col-md-6 col-xs-offset-2 col-xs-8" >
+      <%= link_to "Go back to group", show_group_url(@group.id) %>
+    </div>
+  </div>
+
 </div>
 
 
-<div class="search_results">
-  <p class="length-of-results"></p>
-  <ul class="search-results"></ul>
-</div>
-
-<%= link_to "Go back to group", show_group_url(@group.id) %>
-
-<script>
-  document.getElementsByClassName("btn-input-user")[0].addEventListener("click", searchUser);
-
-  function searchUser(event){
-    key = $(".input-name-user").val()
-    document.getElementsByClassName("length-of-results")[0].textContent = "";
-    document.getElementsByClassName("search-results")[0].textContent = "";    
-    $.ajax({
-      url: "/api/users/" + key,
-      success: paintSearchResults,
-      error: paintFailedSearch
-    });
-  }
-
-  function paintSearchResults(response){
-    console.log("Successful response", response);
-    var resultsContainer = document.createDocumentFragment();
-
-    if(response.length == 0){
-      document.getElementsByClassName("length-of-results")[0].textContent = "No user matches the description";
-    }
-    else{
-      for (var i = 0; i < response.length; i++) { 
-        // var li = document.createElement("li");
-        // li.textContent = response[i].name + " ";
-
-        // var link = document.createElement("a");
-        // var linkText = document.createTextNode("Send invitation");
-        // link.setAttribute('href', "/groups/" + <%=@group.id%> + "/invite_users/" + response[i].id);
-        // link.appendChild(linkText);
-        // li.appendChild(link);
-        // resultsContainer.appendChild(li);
-
-        var li = document.createElement("li");
-        // li.textContent = response[i].name + " ";
-
-        var form = document.createElement("form");
-        form.textContent = response[i].name + " ";
-        form.setAttribute("action", "/groups/" + <%=@group.id%> + "/invite_users/" + response[i].id);        
-        form.setAttribute("method", "post");
-        
-        var button = document.createElement("button");
-        button.setAttribute("type", "submit");
-        button.textContent = "Send invitation"
-        
-        var auth_token = document.createElement("input");
-        auth_token.setAttribute("name", "authenticity_token");
-        auth_token.setAttribute("type", "hidden");
-        auth_token.setAttribute("value", "<%= form_authenticity_token %>");
-
-        form.appendChild(button);
-        form.appendChild(auth_token);
-        li.appendChild(form);
-        resultsContainer.appendChild(li);
-
-      }
-
-      console.log(document.getElementsByClassName("search-results")[0]);
-
-      document.getElementsByClassName("search-results")[0].appendChild(resultsContainer);
-
-      if(response.length == 1){
-        document.getElementsByClassName("length-of-results")[0].textContent = "1 user matches the description";
-      }
-      else {
-        document.getElementsByClassName("length-of-results")[0].textContent = response.length + " users matches the description";
-      }
-    }
-    //hacerlo con la misma aplicacion ademas de via correos
-  }
-
-  function paintFailedSearch(response){
-    console.log("Failed Response", response);
-  }
-</script>
