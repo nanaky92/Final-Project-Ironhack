@@ -26,7 +26,7 @@ class GroupsController < ApplicationController
     elsif @group_id
       flash[:alert] = "Admin couldn't be created"
     else
-      flash[:alert] = "Neither admin nor group couldn't be created"
+      flash[:alert] = "Neither admin nor group could be created"
     end
 
     redirect_to show_user_url
@@ -40,6 +40,7 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:group_id])
     @users = @group.users
     @isUserAdmin = isUserAdmin?(params[:group_id])
+    @events = @group.events
 
   end
 
@@ -90,7 +91,7 @@ class GroupsController < ApplicationController
     if(@group)
       if(isUserAdmin?(params[:group_id]))
         @group.destroy
-        @admin.destroy
+        # @admin.destroy
         flash[:notice] = "Group successfully destroyed"
       else
         flash[:alert] = "You are not the admin of the group, and you cannot destroy the group"      

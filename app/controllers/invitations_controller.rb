@@ -1,4 +1,6 @@
 class InvitationsController < ApplicationController
+  before_action :authenticate_user! 
+
   #invite user to group
   def new
     if(is_user_admin?(params[:group_id]))
@@ -6,7 +8,8 @@ class InvitationsController < ApplicationController
       @group = Group.find(params[:group_id])
       @invitation = Invitation.new
     else
-      flash[:alert] = "Access forbidden: Only the admin of a group can invite people to the group"
+      flash[:alert] = 
+        "Access forbidden: Only the admin of a group can invite people to the group"
       redirect_to show_group_url(params[:group_id])
     end
     # render plain: "Invite user"
@@ -20,7 +23,8 @@ class InvitationsController < ApplicationController
 
       create_invitation_as_admin @invited_user, @group 
     else
-      flash[:alert] = "Access forbidden: Only the admin of a group can invite people to the group"
+      flash[:alert] = 
+        "Access forbidden: Only the admin of a group can invite people to the group"
     end
     redirect_to new_invitation_url(params[:group_id])
   end
@@ -32,7 +36,8 @@ class InvitationsController < ApplicationController
 
     if existance?(@invitation) and existance?(@user) and existance?(@group)
       if(current_user != @user)
-        flash[:alert] = "Access forbidden: Only the recipient of a group can invite people to the group"
+        flash[:alert] = 
+          "Access forbidden: Only the recipient of a group can invite people to the group"
         redirect_to show_user_url
       else
         begin

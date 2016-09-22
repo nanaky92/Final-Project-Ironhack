@@ -10,13 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160919102711) do
+ActiveRecord::Schema.define(version: 20160921163806) do
 
   create_table "admins", force: :cascade do |t|
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_admins_on_user_id"
+  end
+
+  create_table "appointments", force: :cascade do |t|
+    t.string   "action"
+    t.string   "place"
+    t.datetime "time"
+    t.integer  "event_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_appointments_on_event_id"
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.string   "name"
+    t.string   "description"
+    t.datetime "deadline"
+    t.integer  "group_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["group_id"], name: "index_events_on_group_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -56,6 +76,16 @@ ActiveRecord::Schema.define(version: 20160919102711) do
     t.datetime "remember_created_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "votations", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "appointment_id"
+    t.integer  "result"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.index ["appointment_id"], name: "index_votations_on_appointment_id"
+    t.index ["user_id"], name: "index_votations_on_user_id"
   end
 
 end

@@ -16,7 +16,7 @@
   <% if (!@isUserAdmin) %>
 
     <div class="row" style="margin-top: 1em">
-      <div class="col-md-offset-3 col-md-6 col-xs-offset-2 col-xs-8 img-rounded light-blue-node">
+      <div class="col-md-offset-3 col-md-6 col-sm-offset-2 col-sm-8 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
         
         <%@users.each do |user|%>
 
@@ -53,10 +53,14 @@
       </div>
     </div>
       
-    <h3>Admin</h3>
+    <div class="row">
+      <div class="col-md-offset-3 col-md-6 col-sm-offset-2 col-sm-8 col-xs-offset-1 col-xs-10" >
+        <h3>Admin</h3>
+      </div>
+    </div>
 
     <div class="row" style="margin-top: 1em">
-      <div class="col-md-offset-3 col-md-6 col-xs-offset-2 col-xs-8 img-rounded light-blue-node">
+      <div class="col-md-offset-3 col-md-6 col-sm-offset-2 col-sm-8 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
         <div class="row" style="margin: 1em">
           <div class="col-xs-offset-1 col-xs-4 img-rounded light-blue-node" >
             <%=@group.admin.user.name%>
@@ -70,7 +74,7 @@
 
   <% else %>
     <div class="row" style="margin-top: 1em">
-      <div class="col-md-offset-3 col-md-6 col-xs-offset-2 col-xs-8 img-rounded light-blue-node">
+      <div class="col-md-offset-3 col-md-6 col-sm-offset-1 col-sm-10 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
         
         <%@users.each do |user|%>
           <% if (user != current_user) %>
@@ -111,6 +115,35 @@
     </div>
   <%end%>
 
+  <div class="row">
+    <div class="col-md-offset-3 col-md-6 col-sm-offset-1 col-sm-10 col-xs-offset-1 col-xs-10" >
+      <h3>Events</h3>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 1em">
+    <div class="col-md-offset-3 col-md-6 col-sm-offset-1 col-sm-10 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
+      <%@events.each do |event|%>
+        <div class="row" style="margin: 1em">
+          <div class="col-xs-offset-0 col-xs-3" >
+            <%=event.name%>
+          </div>
+          <div class="col-xs-offset-0 col-xs-5" >
+            <div class="time-with-time-zone">
+              <%=event.deadline%>
+            </div>  
+          </div>
+        
+          <div class="col-xs-offset-0 col-xs-2" >
+            <%= link_to "Answer", show_event_url(@group.id, event.id)%>
+          </div>
+          <div class="col-xs-offset-0 col-xs-2" >
+            <%= link_to "Decline"%>
+          </div>
+        </div>
+      <%end%>
+    </div>
+  </div>
 
   <% if(@isUserAdmin) %>
 
@@ -119,13 +152,36 @@
     </div>
 
     <div class="row" style="margin-top: 1em">
-      <div class="col-md-offset-3 col-md-6 col-xs-offset-2 col-xs-8 img-rounded light-blue-node">
+      <div class="col-md-offset-3 col-md-6 col-sm-offset-1 col-sm-10 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
 
         <p><%= link_to "Invite users", new_invitation_url(@group.id), method: "GET" %></p>
-        <p><%= link_to "Create event", "/groups/#{@group.id}/events/new" %></p>
+        <p><%= link_to "Create event", new_event_url(@group.id) %></p>
 
       </div>
     </div>
+
+    <div class="row" style="margin-top: 1em">
+      <div class="col-md-offset-3 col-md-6 col-sm-offset-1 col-sm-10 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
+        <%@events.each do |event|%>
+          <div class="row" style="margin: 1em">
+            <div class="col-xs-offset-0 col-xs-3" >
+              <%=event.name%>
+            </div>
+            <div class="col-xs-offset-0 col-xs-3" >
+              <%= link_to "Delete"%>
+            </div>
+          
+            <div class="col-xs-offset-0 col-xs-3" >
+              <%= link_to "Edit"%>
+            </div>
+            <div class="col-xs-offset-0 col-xs-3" >
+              <%= link_to "End"%>
+            </div>
+          </div>
+        <%end%>
+      </div>
+    </div>
+
   <%end%>
 
   <div class="row" style="margin-top: 1em">
@@ -144,3 +200,20 @@
  -->
 
 
+
+<!-- Convert time to users time zone -->
+<script type="text/javascript">
+  $(document).ready(function(){
+    var offset = new Date().getTimezoneOffset();
+    var datetimes = $(".time-with-time-zone");
+
+    var monthNames = ["Jan", "Feb", "March", "April", "May", "June",
+  "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
+
+    for(var i = 0; i < datetimes.length; i++){
+      var d = new Date(datetimes[i].innerHTML.trim());
+      datetimes[i].innerHTML = d.getDate() + " " + monthNames[d.getMonth()] + " " 
+        + String(d.getFullYear()).slice(2,4) + " " + d.toLocaleTimeString();      
+    }
+  });
+</script>
