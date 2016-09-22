@@ -29,13 +29,13 @@
 
             <%@groups.each do |group| %>
               <div class="col-xs-offset-0 col-xs-5" style="margin: 1em">
-                <p><%=link_to( group.name, show_group_url(group.id) )%></p> 
+                <p><%=link_to( group.name, group_url(group.id) )%></p> 
               </div>
               <div class="col-xs-offset-2 col-xs-5" style="margin: 1em">
                 <%if(isUserAdmin?(group.id))%>
-                  <p><%=link_to("Delete group", destroy_group_url(group.id), method: "DELETE")%></p> 
+                  <p><%=link_to("Delete group", group_url(group.id), method: "DELETE")%></p> 
                 <%else%>
-                  <p><%=link_to("Exit group", exit_group_url(group.id), method: "DELETE")%></p> 
+                  <p><%=link_to("Exit group", group_exit_group_url(group.id), method: "DELETE")%></p> 
                 <%end%>
               </div>
             <%end%>

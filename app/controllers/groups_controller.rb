@@ -19,7 +19,7 @@ class GroupsController < ApplicationController
     if @admin.id && @group.id
       flash[:notice] = "Group created successfully"
       @group.users.push(current_user)
-      redirect_to show_group_url(@group.id)
+      redirect_to group_url(@group.id)
       return
     elsif @admin_id
       flash[:alert] = "Group couldn't be created"
@@ -37,9 +37,9 @@ class GroupsController < ApplicationController
   def show
 
     @user = current_user
-    @group = Group.find(params[:group_id])
+    @group = Group.find(params[:id])
     @users = @group.users
-    @isUserAdmin = isUserAdmin?(params[:group_id])
+    @isUserAdmin = isUserAdmin?(params[:id])
     @events = @group.events
 
   end
@@ -85,11 +85,11 @@ class GroupsController < ApplicationController
 
 
   def destroy
-    @group = Group.find(group_id)
+    @group = Group.find(params[:id])
     @admin = @group.admin
 
     if(@group)
-      if(isUserAdmin?(params[:group_id]))
+      if(isUserAdmin?(params[:id]))
         @group.destroy
         # @admin.destroy
         flash[:notice] = "Group successfully destroyed"

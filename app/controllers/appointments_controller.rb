@@ -13,7 +13,6 @@ class AppointmentsController < ApplicationController
     @group = Group.find params[:group_id]
     @event = Event.find params[:event_id]
     @appointment = Appointment.new
-
     # render plain: "Estamos trabajando en ello"
   end
 
@@ -32,7 +31,7 @@ class AppointmentsController < ApplicationController
       votation = Votation.create(user_id: user.id, appointment_id: @appointment.id, result: 50)
     end
 
-    redirect_to appointments_url(@group.id, @event.id)
+    redirect_to group_event_appointments_url(@group.id, @event.id)
   end
 
   private

@@ -88,7 +88,7 @@
               </div>
 
               <div class="col-xs-offset-0 col-xs-4" >
-                <%= link_to "Delete user", delete_user_from_group_url(@group.id, user.id), method: "DELETE"%>
+                <%= link_to "Delete user", group_delete_user_from_group_url(@group.id, user.id), method: "DELETE"%>
               </div>
             </div>
 
@@ -135,10 +135,11 @@
           </div>
         
           <div class="col-xs-offset-0 col-xs-2" >
-            <%= link_to "Answer", show_event_url(@group.id, event.id)%>
+            link_to "Answer"
           </div>
           <div class="col-xs-offset-0 col-xs-2" >
-            <%= link_to "Decline"%>
+          
+            link_to "Decline"
           </div>
         </div>
       <%end%>
@@ -154,8 +155,8 @@
     <div class="row" style="margin-top: 1em">
       <div class="col-md-offset-3 col-md-6 col-sm-offset-1 col-sm-10 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
 
-        <p><%= link_to "Invite users", new_invitation_url(@group.id), method: "GET" %></p>
-        <p><%= link_to "Create event", new_event_url(@group.id) %></p>
+        <p><%= link_to "Invite users", new_group_invitation_url(@group.id), method: "GET" %></p>
+        <p><%= link_to "Create event", new_group_event_url(@group.id) %></p>
 
       </div>
     </div>
@@ -189,31 +190,3 @@
   </div>
 
 </div>
-
-
-<!-- <h3>Admin</h3>
-
-<ul>
-  <li><%=@group.admin.user.name%></li>
-  <li><%=@group.admin.user.email%></li>
-</ul>
- -->
-
-
-
-<!-- Convert time to users time zone -->
-<script type="text/javascript">
-  $(document).ready(function(){
-    var offset = new Date().getTimezoneOffset();
-    var datetimes = $(".time-with-time-zone");
-
-    var monthNames = ["Jan", "Feb", "March", "April", "May", "June",
-  "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
-
-    for(var i = 0; i < datetimes.length; i++){
-      var d = new Date(datetimes[i].innerHTML.trim());
-      datetimes[i].innerHTML = d.getDate() + " " + monthNames[d.getMonth()] + " " 
-        + String(d.getFullYear()).slice(2,4) + " " + d.toLocaleTimeString();      
-    }
-  });
-</script>

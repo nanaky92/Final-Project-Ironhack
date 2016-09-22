@@ -10,7 +10,7 @@ class InvitationsController < ApplicationController
     else
       flash[:alert] = 
         "Access forbidden: Only the admin of a group can invite people to the group"
-      redirect_to show_group_url(params[:group_id])
+      redirect_to group_url(params[:group_id])
     end
     # render plain: "Invite user"
   end    
@@ -18,7 +18,7 @@ class InvitationsController < ApplicationController
   def create
     if(is_user_admin?(params[:group_id]))
       # @user = current_user
-      @invited_user = User.find(params[:invited_id])
+      @invited_user = User.find(params[:id])
       @group = Group.find(params[:group_id])
 
       create_invitation_as_admin @invited_user, @group 
@@ -26,7 +26,7 @@ class InvitationsController < ApplicationController
       flash[:alert] = 
         "Access forbidden: Only the admin of a group can invite people to the group"
     end
-    redirect_to new_invitation_url(params[:group_id])
+    redirect_to group_new_invitation_url(params[:group_id])
   end
 
   def destroy

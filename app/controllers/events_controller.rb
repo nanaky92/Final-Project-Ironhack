@@ -8,7 +8,7 @@ class EventsController < ApplicationController
       @event = Event.new(group_id: @group.id)
     else
       flash[:alert] = "Access forbidden: Only the admin of a group can create an event in the group"
-      redirect_to show_group_url(params[:group_id])
+      redirect_to group_url(params[:group_id])
     end
     # render plain: "Invite user"
   end 
@@ -16,17 +16,17 @@ class EventsController < ApplicationController
   def create
     if(is_user_admin?(params[:event][:group_id]))
       @event = Event.create(event_params)
-      redirect_to appointments_url(params[:group_id], @event.id)
+      redirect_to group_event_appointments_url(params[:group_id], @event.id)
     else
       flash[:alert] = "Access forbidden: Only the admin of a group can invite people to the group"
-      redirect_to show_group_url(params[:group_id])
+      redirect_to group_url(params[:group_id])
     end
   end
 
   def show
     @user = current_user
     @group = Group.find(params[:group_id])
-    @event = Event.find(params[:event_id])
+    @event = Event.find(params[:id])
     @appointments = @event.appointments
   end
 

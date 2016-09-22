@@ -33,7 +33,7 @@
         <%end%>
           <div class="row" style="margin: 1em">
             <div class="col-xs-offset-1 col-xs-10">
-                <%= link_to "Add new possible meetup place/action/schedule", new_appointment_url(@group.id, @event.id)  %>
+                <%= link_to "Add new possible meetup place/action/schedule", new_group_event_appointment_url(@group.id, @event.id)  %>
             </div>
           </div>
 
@@ -42,7 +42,7 @@
   </div>
 
   <div class="row" style="margin-top: 1em">
-     <%= link_to "Go back to group", show_group_url(@group.id)  %>
+     <%= link_to "Go back to group", group_url(@group.id)  %>
   </div>
 
 </div>
