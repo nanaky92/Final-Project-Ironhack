@@ -65,7 +65,7 @@ class GroupsController < ApplicationController
 
     end
 
-    redirect_to "/"
+    redirect_to group_url(@group)
 
   end    
 
@@ -76,6 +76,12 @@ class GroupsController < ApplicationController
     if(@group.admin.user == current_user)
       flash[:alert] = "You are the admin of the group and cannot be deleted from group"
     else
+      votations = Votation.where(user_id: current_user.id)
+      votations.each do |votation|
+        if votation.appointment.event.group == @group
+          votation.destroy
+        end
+      end
       @group.users.delete(current_user)
       flash[:notice] = "You were successfully deleted from group"
     end

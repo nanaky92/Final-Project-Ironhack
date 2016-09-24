@@ -58,3 +58,5 @@ gem 'figaro'
 # gem 'bootstrap'
 gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
+
+gem 'pry-rails'

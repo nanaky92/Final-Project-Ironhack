@@ -39,17 +39,18 @@
               <div class="col-xs-offset-0 col-xs-4 img-rounded light-blue-node" style="margin-top: 1.2em">
                 <span class="time-with-time-zone"> <%= appointment.time %> </span>
               </div>
-              <div class="col-xs-offset-0 col-xs-2 img-rounded light-blue-node slider-change-color" 
-              data-id=<%=votation.id.to_s%> style="background-color: white">
-                  <span>
-                    <span class="value value-from-slider" data-id=<%=votation.id.to_s%> data-group=<%=@group.id.to_s%> 
-                    data-event=<%=@event.id.to_s%>>
-                      <%=votation.result%>
-                    </span>
-                    <input type="range" min="0" max="100" data-id=<%=votation.id.to_s%>>
-                  </span>​
-              </div>
-
+              
+                <div class="col-xs-offset-0 col-xs-2 img-rounded light-blue-node slider-change-color" 
+                data-id=<%=votation.id.to_s%> style="background-color: white">
+                    <span>
+                      <span class="value value-from-slider" data-id=<%=votation.id.to_s%> data-group=<%=@group.id.to_s%> 
+                      data-event=<%=@event.id.to_s%>>
+                        <%=votation.result%>
+                      </span>
+                      <input type="range" min="0" max="100" data-id=<%=votation.id.to_s%>>
+                    </span>​
+                </div>
+              
             </div>
           <%end%>
         </div>

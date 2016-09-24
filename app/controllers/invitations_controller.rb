@@ -1,5 +1,5 @@
 class InvitationsController < ApplicationController
-  before_action :authenticate_user! 
+  # before_action :authenticate_user! 
 
   #invite user to group
   def new
@@ -50,6 +50,11 @@ class InvitationsController < ApplicationController
               @group.users.push(@user)
               @invitation.delete
               flash[:notice] = "You now belong to " + @group.name
+              @group.events.each do |event|
+                event.appointments.each do |appointment|
+                  a = Votation.create(user_id: @user.id, appointment_id: appointment.id, result: 50, access: false)
+                end
+              end
             end
           rescue
             flash[:alert] = "User already exists"

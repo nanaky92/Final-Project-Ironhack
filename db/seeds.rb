@@ -8,7 +8,7 @@
 
 # groups = Group.create([{name:"Mi comunidad", admin_id: 1}, {name:"Ironhack", admin_id: 2}])
 
-users = User.create([{name: "User1", password: 'ironhack', password_confirmation: 'ironhack', email: "i.crespo1992@gmail.com"}, 
+users = User.create([{name: "User1", password: 'ironhack', password_confirmation: 'ironhack', email: "1@gmail.com"}, 
   {name: "User2", password: 'ironhack', password_confirmation: 'ironhack', email: "2@gmail.com"}, 
   {name: "User3", password: 'ironhack', password_confirmation: 'ironhack', email: "3@gmail.com"}]);
 
