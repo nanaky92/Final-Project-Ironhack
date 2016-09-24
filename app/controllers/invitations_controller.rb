@@ -26,7 +26,7 @@ class InvitationsController < ApplicationController
       flash[:alert] = 
         "Access forbidden: Only the admin of a group can invite people to the group"
     end
-    redirect_to group_new_invitation_url(params[:group_id])
+    redirect_to new_group_invitation_url(params[:group_id])
   end
 
   def destroy
@@ -34,22 +34,26 @@ class InvitationsController < ApplicationController
     @user = User.find(@invitation.user_id)
     @group = Group.find(@invitation.group_id)
 
-    if existance?(@invitation) and existance?(@user) and existance?(@group)
-      if(current_user != @user)
-        flash[:alert] = 
-          "Access forbidden: Only the recipient of a group can invite people to the group"
-        redirect_to show_user_url
-      else
-        begin
-          if @group.users.include?(@user)
+    if(@group.id != params[:group_id].to_i)
+      flash[:alert] = "Invitation doesn't belong to group"
+    else
+      if existance?(@invitation) and existance?(@user) and existance?(@group)
+        if(current_user != @user)
+          flash[:alert] = 
+            "Access forbidden: Only the recipient of a group can invite people to the group"
+          redirect_to show_user_url
+        else
+          begin
+            if @group.users.include?(@user)
+              flash[:alert] = "User already exists"
+            else
+              @group.users.push(@user)
+              @invitation.delete
+              flash[:notice] = "You now belong to " + @group.name
+            end
+          rescue
             flash[:alert] = "User already exists"
-          else
-            @group.users.push(@user)
-            @invitation.delete
-            flash[:notice] = "You now belong to " + @group.name
           end
-        rescue
-          flash[:alert] = "User already exists"
         end
       end
     end

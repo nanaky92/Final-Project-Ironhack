@@ -29,7 +29,7 @@
 
             <%@groups.each do |group| %>
               <div class="col-xs-offset-0 col-xs-5" style="margin: 1em">
-                <p><%=link_to( group.name, group_url(group.id) )%></p> 
+                <p><%=link_to( group.name, group_url(group.id), method: "GET" )%></p> 
               </div>
               <div class="col-xs-offset-2 col-xs-5" style="margin: 1em">
                 <%if(isUserAdmin?(group.id))%>
@@ -67,8 +67,8 @@
       <%else %>
         
         <%@invitations.each do |invitation| %>
-            <% link = invitation.group.admin.user.name + " invited you to " + invitation.group.name%>
-            <p><%=link_to(link, "/invitations/" + invitation.id.to_s, method: "DELETE" )%></p>
+            <% link_text = invitation.group.admin.user.name + " invited you to " + invitation.group.name%>
+            <p><%=link_to(link_text, group_invitation_url(invitation.group_id, invitation.id), method: "DELETE" )%></p>
           
         <%end%>
         </ul>

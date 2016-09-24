@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
   namespace :api do
     get 'users/:key', to: "users#show"
+    # patch "/groups/events/votations", to: "votations#update"
+    post "/groups/events/votations", to: "votations#update"
   end
 
   devise_for :users
@@ -13,19 +15,21 @@ Rails.application.routes.draw do
     delete "/delete_user/:user_id", to: "groups#delete_user", as: "delete_user_from_group"
     delete "/exit_group", to: "groups#exit_group", as: "exit_group"
 
-    resources :invitations, only: [:new, :create, :destroy]
+    resources :invitations, only: [:new, :destroy, :destroy]
+    post "/invitations/:id/", to: "invitations#create"
 
     resources :events, except: [:index, :edit, :update, :destroy] do
       resources :appointments, except: [:edit, :show, :update, :destroy]
+        # resources :votations, only: [:edit]
+        # patch "/votations/:data", to: "votations#update", as: "update_votation"
     end
   end
 
   devise_scope :user do 
-    get "/" => "users#show"
+    root "users#show"
   end
 
-  get "/", to: "users#show"
+  root "users#show"
 
 
 end
-      # patch "/events/:event_id/appointments/:appointment_id/votations", to: "votations#edit", as: "edit_votation"

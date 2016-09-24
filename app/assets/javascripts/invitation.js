@@ -1,12 +1,20 @@
+document.addEventListener("DOMContentLoaded", function(event) { 
+  var btns = document.getElementsByClassName("btn-input-user");
+  if(btns.length == 1)
+    btns[0].onclick = searchUser;
+});
+
+
 function searchUser(event){
   var key = document.getElementsByClassName("input-name-user")[0].value;
   document.getElementsByClassName("length-of-results")[0].textContent = "";
-  document.getElementsByClassName("search-results")[0].textContent = "";    
-  $.ajax({
-    url: "/api/users/" + key,
-    success: paintSearchResults,
-    error: paintFailedSearch
-  });
+  document.getElementsByClassName("search-results")[0].textContent = "";   
+  proxy("GET", "/api/users/" + key, "json").then(paintSearchResults).catch(paintFailedSearch);
+  // $.ajax({
+  //   url: "/api/users/" + key,
+  //   success: paintSearchResults,
+  //   error: paintFailedSearch
+  // });
 }
 
 
@@ -61,7 +69,7 @@ function getButton(){
 function getForm(col1, col2, id){
   var form = document.createElement("form");
 
-  form.setAttribute("action", window.location.href + "/" + id);        
+  form.setAttribute("action", window.location.href.slice(0,-3) + id);        
   form.setAttribute("method", "post");
 
   form.appendChild(col1);
@@ -86,17 +94,12 @@ function paintSearchResults(response){
     document.getElementsByClassName("length-of-results")[0].textContent = "No user matches the description";
   }
   else {
-
     var resultsContainer = getSearchResults(response);
 
     document.getElementsByClassName("search-results")[0].appendChild(resultsContainer);
 
-    if(response.length == 1){
-      document.getElementsByClassName("length-of-results")[0].textContent = "1 user matches the description";
-    }
-    else {
-      document.getElementsByClassName("length-of-results")[0].textContent = response.length + " users match the description";
-    }
+    document.getElementsByClassName("length-of-results")[0].textContent = 
+    (response.length == 1) ?  "1 user matches the description" : response.length + " users match the description"
   }
 }
   //hacerlo con la misma aplicacion ademas de via correos
@@ -104,9 +107,3 @@ function paintSearchResults(response){
 function paintFailedSearch(response){
   console.log("Failed Response", response);
 }
-
-
-document.addEventListener("DOMContentLoaded", function(event) { 
-  document.getElementsByClassName("btn-input-user")[0].onclick = searchUser;
-});
-

@@ -4,7 +4,7 @@ class CreateVotations < ActiveRecord::Migration[5.0]
       t.references :user, foreign_key: true
       t.references :appointment, foreign_key: true
       t.integer :result
-
+      t.boolean :access, default: false
       t.timestamps
     end
   end

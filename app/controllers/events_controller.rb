@@ -28,6 +28,8 @@ class EventsController < ApplicationController
     @group = Group.find(params[:group_id])
     @event = Event.find(params[:id])
     @appointments = @event.appointments
+    # @votations = @user.votations.where(group_id: params[:group_id])
+    session[:id] = @user.id
   end
 
 

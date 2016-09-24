@@ -26,63 +26,46 @@
         </div>
       </div>
       
-<!--         <%@appointments.each do |appointment| %>
-          <div class="row" style="margin: 1em">
-            <div class="col-xs-offset-0 col-xs-3 img-rounded light-blue-node" >
-              <%=link_to appointment.action, edit_votation_url(@group.id, @event.id, appointment.id)%>
-            </div>
-            <div class="col-xs-offset-0 col-xs-3 img-rounded light-blue-node" >
-              <%=link_to appointment.place, edit_votation_url(@group.id, @event.id, appointment.id)%>
-            </div>
-            <div class="col-xs-offset-0 col-xs-6 img-rounded light-blue-node" >
-              <span class="time-with-time-zone"> <%= link_to appointment.time, edit_votation_url(@group.id, @event.id, appointment.id)%> </span>
-            </div>
-          </div>
-          <%end%> -->
 
-          <%@appointments.each_with_index do |appointment, idx| %>
-          <div class="row" style="margin: 1em">
-            <div class="col-xs-offset-0 col-xs-3 img-rounded light-blue-node" >
-              <%= appointment.action%>
-            </div>
-            <div class="col-xs-offset-0 col-xs-3 img-rounded light-blue-node" >
-              <%= appointment.place%>
-            </div>
-            <div class="col-xs-offset-0 col-xs-4 img-rounded light-blue-node" >
-              <span class="time-with-time-zone"> <%= appointment.time %> </span>
-            </div>
-            <div class="col-xs-offset-0 col-xs-2 img-rounded light-blue-node slider-change-color" data-id=<%=idx.to_s%> style="background-color: white">
-                <span><span class="value" data-id=<%=idx.to_s%>>50</span><input type="range" min="0" max="100" data-id=<%=idx.to_s%>></span>​
-            </div>
+          <%@appointments.each do |appointment| %>
+            <div class="row" style="margin: 1em">
+              <% votation = appointment.votations.find_by(user_id: @user.id) %>
+              <div class="col-xs-offset-0 col-xs-3 img-rounded light-blue-node" style="margin-top: 1.2em">
+                <%= appointment.action%>
+              </div>
+              <div class="col-xs-offset-0 col-xs-3 img-rounded light-blue-node" style="margin-top: 1.2em">
+                <%= appointment.place%>
+              </div>
+              <div class="col-xs-offset-0 col-xs-4 img-rounded light-blue-node" style="margin-top: 1.2em">
+                <span class="time-with-time-zone"> <%= appointment.time %> </span>
+              </div>
+              <div class="col-xs-offset-0 col-xs-2 img-rounded light-blue-node slider-change-color" 
+              data-id=<%=votation.id.to_s%> style="background-color: white">
+                  <span>
+                    <span class="value value-from-slider" data-id=<%=votation.id.to_s%> data-group=<%=@group.id.to_s%> 
+                    data-event=<%=@event.id.to_s%>>
+                      <%=votation.result%>
+                    </span>
+                    <input type="range" min="0" max="100" data-id=<%=votation.id.to_s%>>
+                  </span>​
+              </div>
 
-          </div>
+            </div>
           <%end%>
         </div>
       </div>
 
       <div class="row" style="margin-top: 1em">
-        <button class="btn btn-primary btn-send-votation">Send Votation</button>
+<!--           <input name="authenticity_token" type="hidden" value=<%= form_authenticity_token %> -->          
+        <button class="btn btn-primary btn-send-votation" data-token=<%= form_authenticity_token %>>
+          Send Votation
+        </button>
      </div>
 
       <div class="row" style="margin-top: 1em">
        <%= link_to "Go back to group", group_url(@group.id)  %>
      </div>
 
+  <!-- <script type="text/javascript"> window._token = '';</script> -->
    </div>
 
-
-<!-- <h3>Admin</h3>
-
-<ul>
-  <li><%=@group.admin.user.name%></li>
-  <li><%=@group.admin.user.email%></li>
-</ul>
--->
-
-
-
-<!-- Convert time to users time zone -->
-<script type="text/javascript">
-
-
-</script>

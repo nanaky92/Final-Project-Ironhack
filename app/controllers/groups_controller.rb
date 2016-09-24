@@ -14,7 +14,8 @@ class GroupsController < ApplicationController
   def create
 
     @admin = Admin.create({user_id: current_user.id})
-    @group = Group.create({name: params[:group][:name], admin_id: current_user.id})
+    # @group = Group.create({name: params[:group][:name], admin_id: current_user.id})
+    @group = Group.create({name: params[:group][:name], admin_id: @admin.id})
 
     if @admin.id && @group.id
       flash[:notice] = "Group created successfully"
@@ -90,8 +91,8 @@ class GroupsController < ApplicationController
 
     if(@group)
       if(isUserAdmin?(params[:id]))
-        @group.destroy
         # @admin.destroy
+        @group.destroy
         flash[:notice] = "Group successfully destroyed"
       else
         flash[:alert] = "You are not the admin of the group, and you cannot destroy the group"      
