@@ -18,8 +18,8 @@ Rails.application.routes.draw do
     post "/invitations/:id/", to: "invitations#create"
 
     resources :events, except: [:index, :edit, :update, :destroy] do
-      resources :appointments, except: [:edit, :show, :update, :destroy]
-        # resources :votations, only: [:edit]
+      resources :appointments, except: [:edit, :update, :destroy]
+        resources :votations, only: [:index]
         # patch "/votations/:data", to: "votations#update", as: "update_votation"
     end
   end

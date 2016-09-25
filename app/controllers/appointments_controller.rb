@@ -1,6 +1,6 @@
 class AppointmentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :authenticate_admin 
+  before_action :authenticate_admin, except: :show
 
   def index
     @appointments = @event.appointments
@@ -26,6 +26,20 @@ class AppointmentsController < ApplicationController
     redirect_to group_event_appointments_url(@group.id, @event.id)
   end
 
+  def show
+    @user = current_user
+    @group = Group.find params[:group_id]
+    @users_group = @group.users
+    @event = Event.find params[:event_id]
+    @appointment = Appointment.find(params[:id])
+
+    unless (@appointment.event == @event and @event.group == @group and @users_group.include?(@user))
+      render plain: "La matare"
+    end
+
+    @votations = @appointment.votations
+  end
+
   private
 
     def appointment_params
@@ -43,7 +57,7 @@ class AppointmentsController < ApplicationController
       @event = Event.find params[:event_id]
       unless @group.isUserAdmin?(current_user)
         flash[:alert] = 
-        "Access forbidden: Only the admin of a group can add meetups"
+        "Access forbidden: Only the admin of a group can access this"
         redirect_to group_event_url(params[:group_id], params[:event_id])
       end
     end
