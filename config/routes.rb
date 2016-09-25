@@ -2,11 +2,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     get 'users/:key', to: "users#show"
-    # patch "/groups/events/votations", to: "votations#update"
-    post "/groups/events/votations", to: "votations#update", as: "group_event_votation"
-    post "/groups/events/votations/dont_care", to: "votations#dont_care", as: "group_event_votation_dont_care"
-    post "/groups/events/votations/not_going", to: "votations#not_going", as: "group_event_votation_not_going"
-    # post "/groups/events/votations", to: "votations#create", as: "group_event_votation"
+    patch "/groups/events/votations", to: "votations#update", as: "group_event_votation"
   end
 
   devise_for :users

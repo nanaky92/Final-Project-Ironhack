@@ -27,47 +27,67 @@
       </div>
       
 
-          <%@appointments.each do |appointment| %>
-            <div class="row" style="margin: 1em">
-              <% #votation = appointment.votations.find_by(user_id: @user.id) %>
-              <% votation = @appointments_votation_map[appointment.id] %>
-              <div class="col-xs-offset-0 col-xs-3 img-rounded light-blue-node" style="margin-top: 1.2em">
-                <%= appointment.action%>
-              </div>
-              <div class="col-xs-offset-0 col-xs-3 img-rounded light-blue-node" style="margin-top: 1.2em">
-                <%= appointment.place%>
-              </div>
-              <div class="col-xs-offset-0 col-xs-4 img-rounded light-blue-node" style="margin-top: 1.2em">
-                <span class="time-with-time-zone"> <%= appointment.time %> </span>
-              </div>
-              
-                <div class="col-xs-offset-0 col-xs-2 img-rounded light-blue-node slider-change-color" 
-                data-id=<%=votation.id.to_s%> style="background-color: white">
-                    <span>
-                      <span class="value value-from-slider" data-id=<%=votation.id.to_s%> data-group=<%=@group.id.to_s%> 
-                      data-event=<%=@event.id.to_s%>>
-                        <%=votation.result%>
-                      </span>
-                      <input type="range" min="0" max="100" data-id=<%=votation.id.to_s%>>
-                    </span>​
-                </div>
-              
+      <%@appointments.each do |appointment| %>
+        <div class="row" style="margin: 1em">
+          <% #votation = appointment.votations.find_by(user_id: @user.id) %>
+          <% votation = @appointments_votation_map[appointment.id] %>
+          <div class="col-xs-offset-0 col-xs-3 img-rounded light-blue-node" style="margin-top: 1.2em">
+            <%= appointment.action%>
+          </div>
+          <div class="col-xs-offset-0 col-xs-3 img-rounded light-blue-node" style="margin-top: 1.2em">
+            <%= appointment.place%>
+          </div>
+          <div class="col-xs-offset-0 col-xs-4 img-rounded light-blue-node" style="margin-top: 1.2em">
+            <span class="time-with-time-zone"> <%= appointment.time %> </span>
+          </div>
+          
+            <div class="col-xs-offset-0 col-xs-2 img-rounded light-blue-node slider-change-color" 
+            data-id=<%=votation.id.to_s%> style="background-color: white">
+                <span>
+                  <span class="value value-from-slider" data-id=<%=votation.id.to_s%> data-group=<%=@group.id.to_s%> 
+                  data-event=<%=@event.id.to_s%>>
+                    <%=votation.result%>
+                  </span>
+                  <input type="range" min="0" max="100" data-id=<%=votation.id.to_s%>>
+                </span>​
             </div>
-          <%end%>
+          
         </div>
+      <%end%>
+    </div>
+  </div>
+
+  <div class="row margin-top">
+    <button class="btn btn-primary btn-send-votation" data-token=<%= form_authenticity_token %>>
+      Send Votation
+    </button>
+  </div>
+
+  <div class="row margin-top">
+    <span id="btnWrap">
+      <button class="btn btn-primary btn-not-going hover" data-token=<%= form_authenticity_token %>>
+        Not going
+      </button>
+      <p class="btnDescription">Check this option if you aren't going to an event no matter what.</p>
+    </span>
+  </div>
+
+  <div class="row" style="margin-top: 1em">
+    <%= link_to "See results", group_url(@group.id), method: "get"  %>
+  </div>
+
+
+  <div class="row" style="margin-top: 1em">
+    <%= link_to "Go back to group", group_url(@group.id), method: "get"  %>
+  </div>
+
+
+  <div class="row margin-top">
+      <div class="col-md-4 col-md-offset-4">
+        <div class="success-messages light-blue-node img-rounded text-center"></div>
+        <div class="error-messages img-rounded text-center alert-color"></div>
       </div>
+  </div>
 
-      <div class="row" style="margin-top: 1em">
-<!--           <input name="authenticity_token" type="hidden" value=<%= form_authenticity_token %> -->          
-        <button class="btn btn-primary btn-send-votation" data-token=<%= form_authenticity_token %>>
-          Send Votation
-        </button>
-     </div>
-
-      <div class="row" style="margin-top: 1em">
-       <%= link_to "Go back to group", group_url(@group.id), method: "get"  %>
-     </div>
-
-  <!-- <script type="text/javascript"> window._token = '';</script> -->
-   </div>
+</div>
 

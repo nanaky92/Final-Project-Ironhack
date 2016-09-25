@@ -8,9 +8,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
   };
   
   var sendVotationButton = document.querySelector(".btn-send-votation");
+  var notGoingButton = document.querySelector(".btn-not-going");
   
   if(sendVotationButton) 
     sendVotationButton.addEventListener("click", sendVotationHandler);
+
+  if(notGoingButton) 
+    notGoingButton.addEventListener("click", notGoingHandler);
 
 });
 
@@ -105,30 +109,68 @@ function Color(_r, _g, _b) {
 }
 
 function paintSuccessMessage(response){
-  console.log(response);
+  document.querySelector(".error-messages").innerHTML = "";
+  document.querySelector(".success-messages").innerHTML = response.message;
+}
+
+function paintFailMessage(response){
+  console.log(response.responseJSON.message);
+  document.querySelector(".error-messages").innerHTML = response.responseJSON.message;
+  document.querySelector(".success-messages").innerHTML = "";
 }
 
 
-function sendVotationHandler(){
+function notGoingHandler(){
   var data = {};
   var inputs = document.querySelectorAll(".value-from-slider");
   if(inputs.length!=0){
     for (var i=0; i<inputs.length; i++){
-      data["votation" + String(inputs[i].dataset.id).trim()] = inputs[i].innerHTML.trim();
+      inputs[i].innerHTML = 0;
+      var id = inputs[i].dataset.id;
+      inputs[i].parentNode.childNodes[3].value = 0;
+      changeColorToSlider(0, id);
+      data["votation" + String(inputs[i].dataset.id).trim()] = 0;
     };
 
     data["group"] = inputs[0].dataset.group;
     data["event"] = inputs[0].dataset.event;
 
-    // proxy("post", "/api/groups/events/votations/", "json", JSON.stringify(data)).then(paintSuccessMessage).catch(console.log(response));
+    ajaxVotation(inputs, data);
+  }
 
-    $.ajax({
-      url: "/api/groups/events/votations/",
-      success: paintSuccessMessage,
-      data: data,
-      error: function(response){console.log(response)},
-      method: "post"
-    });
+}
+
+
+function sendVotationHandler(){
+  var data = {}
+  var inputs = document.querySelectorAll(".value-from-slider");
+  if(inputs.length!=0){
+  
+    for (var i=0; i<inputs.length; i++){
+      data["votation" + String(inputs[i].dataset.id).trim()] = inputs[i].innerHTML.trim();
+    };
+  
+    data["group"] = inputs[0].dataset.group;
+    data["event"] = inputs[0].dataset.event;
+
+    ajaxVotation(inputs, data);
+  }
+}
+
+function ajaxVotation(inputs, data){
+  
+  $.ajax({
+    url: "/api/groups/events/votations/",
+    success: paintSuccessMessage,
+    data: data,
+    error: paintFailMessage,
+    method: "patch"
+  });
+}
+
+
+
+    // proxy("post", "/api/groups/events/votations/", "json", JSON.stringify(data)).then(paintSuccessMessage).catch(console.log(response));
 
     // $.ajax({
     //   url: "/groups/" + inputs[0].dataset.group + "/events/" + inputs[0].dataset.event + "/votations/" + JSON.stringify(data),
@@ -136,6 +178,3 @@ function sendVotationHandler(){
     //   error: function(response){console.log(response)},
     //   method: "patch"
     // });
-
-  }
-}

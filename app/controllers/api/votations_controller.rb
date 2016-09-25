@@ -23,13 +23,4 @@ class Api::VotationsController < ApplicationController
 
   end
 
-
-  def dont_care
-
-  end
-
-  def not_going
-
-  end
-
 end

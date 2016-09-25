@@ -36,7 +36,19 @@
   margin-top: 1em;
 }
 
+.margin-navbar{
+  margin-top: 1.5em;
+}
+
 .margin{
   margin: 1em;
   font-size: 16px;
+}
+
+.alert-color{
+  background-color: #ffadad
+}
+
+.field-margin{
+  margin: 2em;
 }

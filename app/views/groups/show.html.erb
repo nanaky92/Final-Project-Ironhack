@@ -132,10 +132,10 @@
         </p>        
       <% else %>
         <div class="row margin">
-          <div class="col-xs-offset-0 col-xs-2" >
+          <div class="col-xs-offset-1 col-xs-2" >
             <strong> Name </strong>
           </div>
-          <div class="col-xs-offset-0 col-xs-4" >
+          <div class="col-xs-offset-1 col-xs-4" >
             <strong> Deadline </strong>
           </div>
         
@@ -145,42 +145,24 @@
 
         <%@events.each do |event|%>
           <div class="row margin">
-            <div class="col-xs-offset-0 col-xs-2" >
+            <div class="col-xs-offset-1 col-xs-2" >
               <%=event.name%>
             </div>
-            <div class="col-xs-offset-0 col-xs-4" >
+            <div class="col-xs-offset-1 col-xs-4" >
               <div class="time-with-time-zone">
                 <%=event.deadline%>
               </div>  
             </div>
           
-            <div class="col-xs-offset-0 col-xs-2" >
+            <div class="col-xs-offset-1 col-xs-2" >
               <%=link_to "Answer", group_event_url(@group.id, event.id), 
               method: "GET", class: "btn btn-primary", style: "color: white"%>
-            </div>
-            <div class="col-xs-offset-0 col-xs-2" >
-              <form action="/api/groups/events/votations/dont_care" method="post">
-                <button class="btn btn-primary" type="submit">Don't care</button>
-                <input type="hidden" name="authenticity_token"
-                    value="<%= form_authenticity_token %>">
-              </form>
-            </div>
-            <div class="col-xs-offset-0 col-xs-2" >
-              <form action="/api/groups/events/votations/not_going" method="post">
-                <button class="btn btn-primary" type="submit">Not going</button>
-                <input type="hidden" name="authenticity_token"
-                    value="<%= form_authenticity_token %>">
-              </form>            
-            </div>            
+            </div>          
           </div>
         <%end%>
       <%end%>
 
 
-      <div class="row text-left">
-        <p> Don't care: check this option if you are definitely going to an event and you really don't care when or where <br>
-        Not going: check this option if you aren't going to an event no matter what  </p>
-      </div>
     </div>
   </div>
 
