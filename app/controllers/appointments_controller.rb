@@ -1,25 +1,17 @@
 class AppointmentsController < ApplicationController
-  before_action :authenticate_user! 
+  before_action :authenticate_user!
+  before_action :authenticate_admin 
 
   def index
-    @group = Group.find params[:group_id]
-    @event = Event.find params[:event_id]
     @appointments = @event.appointments
-# isUserAdmin
-    # render plain: "Estamos trabajando en ello"
   end
 
   def new
-    @group = Group.find params[:group_id]
-    @event = Event.find params[:event_id]
     @appointment = Appointment.new
-    # render plain: "Estamos trabajando en ello"
   end
 
   def create
-    @event = Event.find params[:event_id]
     @appointment = Appointment.create(appointment_params)
-    # raise @appointment
     if @appointment.id
       flash[:notice] = "Meetup created"
     else
@@ -36,13 +28,23 @@ class AppointmentsController < ApplicationController
 
   private
 
-  def appointment_params
-    hash = params.require(:appointment).permit(:action, :place, :event_id)
+    def appointment_params
+      hash = params.require(:appointment).permit(:action, :place, :event_id)
 
-    app_params = params[:appointment]
+      app_params = params[:appointment]
 
-    hash[:time] = Time.new(app_params["time(1i)"], app_params["time(2i)"], 
-      app_params["time(3i)"], app_params["time(4i)"], app_params["time(5i)"])
-    hash
-  end
+      hash[:time] = Time.new(app_params["time(1i)"], app_params["time(2i)"], 
+        app_params["time(3i)"], app_params["time(4i)"], app_params["time(5i)"])
+      hash
+    end
+
+    def authenticate_admin
+      @group = Group.find params[:group_id]
+      @event = Event.find params[:event_id]
+      unless @group.isUserAdmin?(current_user)
+        flash[:alert] = 
+        "Access forbidden: Only the admin of a group can add meetups"
+        redirect_to group_event_url(params[:group_id], params[:event_id])
+      end
+    end
 end

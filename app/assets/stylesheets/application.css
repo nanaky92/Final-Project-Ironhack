@@ -31,3 +31,12 @@
 .light-blue-node {
   background-color: #c9e9f6;
 }
+
+.margin-top{
+  margin-top: 1em;
+}
+
+.margin{
+  margin: 1em;
+  font-size: 16px;
+}

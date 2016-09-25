@@ -2,7 +2,6 @@ class GroupsController < ApplicationController
   before_action :authenticate_user! 
 
 
-  #form to create new user
   def new
 
     @user = current_user
@@ -10,11 +9,9 @@ class GroupsController < ApplicationController
     
   end
 
-  #creates new user and redirects to show
   def create
 
     @admin = Admin.create({user_id: current_user.id})
-    # @group = Group.create({name: params[:group][:name], admin_id: current_user.id})
     @group = Group.create({name: params[:group][:name], admin_id: @admin.id})
 
     if @admin.id && @group.id
@@ -34,39 +31,34 @@ class GroupsController < ApplicationController
 
   end
 
-  #shows the group
   def show
 
     @user = current_user
     @group = Group.find(params[:id])
     @users = @group.users
-    @isUserAdmin = isUserAdmin?(params[:id])
+    @isUserAdmin = @group.isUserAdmin?(@user)
     @events = @group.events
 
   end
 
-  #delete user from group
-  def delete_user
 
+  def delete_user
     @group = Group.find(params[:group_id])
     @user = User.find(params[:user_id])
-    if(isUserAdmin?(params[:group_id]))
 
+    # if(isUserAdmin?(params[:group_id]))
+    if(@group.isUserAdmin?(@user))
       if(@group.admin.user == @user)
         flash[:alert] = "User to delete is the admin of the group and cannot be deleted"
       else
         @group.users.delete(@user)
         flash[:notice] = "User successfully deleted from group"
       end
-
     else
-
       flash[:alert] = "Current user is not the admin of the group and cannot delete other users"
-
     end
 
     redirect_to group_url(@group)
-
   end    
 
   def exit_group  
@@ -86,18 +78,18 @@ class GroupsController < ApplicationController
       flash[:notice] = "You were successfully deleted from group"
     end
 
-    redirect_to "/"
+    redirect_to root
 
   end    
 
 
   def destroy
     @group = Group.find(params[:id])
+    @user = current_user
     @admin = @group.admin
 
     if(@group)
-      if(isUserAdmin?(params[:id]))
-        # @admin.destroy
+      if(@group.isUserAdmin?(@user))
         @group.destroy
         flash[:notice] = "Group successfully destroyed"
       else
@@ -105,17 +97,13 @@ class GroupsController < ApplicationController
       end
     end
 
-    redirect_to "/"
+    redirect_to root
   end
   
   private
 
-  def group_params
-    params.require(:group).permit(:name)
-  end
-
-  def isUserAdmin?(group_id)
-    current_user == Group.find(group_id).admin.user
-  end
+    def group_params
+      params.require(:group).permit(:name)
+    end
 
 end

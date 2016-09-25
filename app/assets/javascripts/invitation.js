@@ -10,11 +10,6 @@ function searchUser(event){
   document.getElementsByClassName("length-of-results")[0].textContent = "";
   document.getElementsByClassName("search-results")[0].textContent = "";   
   proxy("GET", "/api/users/" + key, "json").then(paintSearchResults).catch(paintFailedSearch);
-  // $.ajax({
-  //   url: "/api/users/" + key,
-  //   success: paintSearchResults,
-  //   error: paintFailedSearch
-  // });
 }
 
 

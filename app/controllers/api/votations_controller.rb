@@ -1,6 +1,5 @@
 class Api::VotationsController < ApplicationController
 
-
   def update
     @user = User.find(session[:id])
 
@@ -8,7 +7,7 @@ class Api::VotationsController < ApplicationController
     @event = Event.find(params["event"])
     @appointments = @event.appointments
 
-    if isDeadline?(@event.deadline)
+    if @event.isDeadline?
       @appointments.each do |appointment|
         votation = appointment.votations.find_by(user_id: @user.id)
         votation.update(result: params["votation"+votation.id.to_s], access: true)
@@ -23,4 +22,14 @@ class Api::VotationsController < ApplicationController
     end
 
   end
+
+
+  def dont_care
+
+  end
+
+  def not_going
+
+  end
+
 end

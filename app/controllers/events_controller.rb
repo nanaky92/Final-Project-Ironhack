@@ -2,9 +2,10 @@ class EventsController < ApplicationController
   before_action :authenticate_user! 
 
   def new
-    if(is_user_admin?(params[:group_id]))
+    @group = Group.find(params[:group_id])
+
+    if(@group.isUserAdmin?(current_user))
       @user = current_user
-      @group = Group.find(params[:group_id])
       @event = Event.new(group_id: @group.id)
     else
       flash[:alert] = "Access forbidden: Only the admin of a group can create an event in the group"
@@ -14,11 +15,13 @@ class EventsController < ApplicationController
   end 
 
   def create
-    if(is_user_admin?(params[:event][:group_id]))
+    @group = Group.find(params[:event][:group_id])
+    
+    if(@group.isUserAdmin?(current_user))
       @event = Event.create(event_params)
       redirect_to group_event_appointments_url(params[:group_id], @event.id)
     else
-      flash[:alert] = "Access forbidden: Only the admin of a group can invite people to the group"
+      flash[:alert] = "Access forbidden: Only the admin of a group can create events"
       redirect_to group_url(params[:group_id])
     end
   end
@@ -28,26 +31,26 @@ class EventsController < ApplicationController
     @group = Group.find(params[:group_id])
     @event = Event.find(params[:id])
     @appointments = @event.appointments
-    # @votations = @user.votations.where(group_id: params[:group_id])
+
+    @appointments_votation_map = {}
+    @appointments.each do |appointment|
+      @appointments_votation_map[appointment.id] = appointment.votations.find_by(user_id: @user.id)
+    end
     session[:id] = @user.id
   end
 
 
   private
 
-  def is_user_admin?(group_id)
-    current_user == Group.find(group_id).admin.user
-  end
+    def event_params
+      hash = params.require(:event).permit(:name, :description, :group_id)
 
-  def event_params
-    hash = params.require(:event).permit(:name, :description, :group_id)
+      ev_params = params[:event]
 
-    ev_params = params[:event]
+      hash[:deadline] = Time.new(ev_params["deadline(1i)"], ev_params["deadline(2i)"], 
+        ev_params["deadline(3i)"], ev_params["deadline(4i)"], ev_params["deadline(5i)"])
 
-    hash[:deadline] = Time.new(ev_params["deadline(1i)"], ev_params["deadline(2i)"], 
-      ev_params["deadline(3i)"], ev_params["deadline(4i)"], ev_params["deadline(5i)"])
-
-    hash
-  end
+      hash
+    end
 
 end

@@ -3,12 +3,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   var inputs = document.querySelectorAll("input[type='range']");
   for (var i=0;i<inputs.length;i++){
-    // inputs[i].addEventListener("change", sliderHandler);
     inputs[i].addEventListener("input", sliderHandler);
     setupSlider(inputs[i]);
   };
-
-  document.querySelector(".btn-send-votation").addEventListener("click", sendVotationHandler);
+  
+  var sendVotationButton = document.querySelector(".btn-send-votation");
+  
+  if(sendVotationButton) 
+    sendVotationButton.addEventListener("click", sendVotationHandler);
 
 });
 
