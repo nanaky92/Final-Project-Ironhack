@@ -132,7 +132,7 @@
         </p>        
       <% else %>
         <div class="row margin">
-          <div class="col-xs-offset-1 col-xs-2" >
+          <div class="col-xs-offset-0 col-xs-4" >
             <strong> Name </strong>
           </div>
           <div class="col-xs-offset-1 col-xs-4" >
@@ -145,7 +145,7 @@
 
         <%@events.each do |event|%>
           <div class="row margin">
-            <div class="col-xs-offset-1 col-xs-2" >
+            <div class="col-xs-offset-0 col-xs-4" >
               <%=event.name%>
             </div>
             <div class="col-xs-offset-1 col-xs-4" >
@@ -154,7 +154,7 @@
               </div>  
             </div>
           
-            <div class="col-xs-offset-1 col-xs-2" >
+            <div class="col-xs-2" >
               <%=link_to "Answer", group_event_url(@group.id, event.id), 
               method: "GET", class: "btn btn-primary", style: "color: white"%>
             </div>          
