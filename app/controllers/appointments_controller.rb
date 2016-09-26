@@ -37,7 +37,7 @@ class AppointmentsController < ApplicationController
     number_users = @users_group.length
     @number_non_voters = number_users - @number_voters
     unless (@appointment.event == @event and @event.group == @group and @users_group.include?(@user))
-      render plain: "La matare"
+      render plain: "Error"
     end
 
     @votations = @appointment.votations

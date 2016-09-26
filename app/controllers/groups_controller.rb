@@ -1,7 +1,5 @@
 class GroupsController < ApplicationController
   before_action :authenticate_user! 
-  require 'sendgrid-ruby'
-  include SendGrid
 
   def new
     GroupMailer.welcome(current_user).deliver_now
