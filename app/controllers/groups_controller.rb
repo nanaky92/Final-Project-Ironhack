@@ -2,7 +2,7 @@ class GroupsController < ApplicationController
   before_action :authenticate_user! 
 
   def new
-
+    GroupMailer.welcome(current_user).deliver_later
     @user = current_user
     @group = Group.new
     
