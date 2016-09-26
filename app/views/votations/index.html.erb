@@ -60,7 +60,8 @@
 
   <%if(@isAdmin)%>
     <div class="row margin-top">
-      <button class="btn btn-primary" data-token=<%= form_authenticity_token %>>
+      <button class="btn btn-primary btn-finish-votation" data-token=<%= form_authenticity_token %> 
+      data-group=<%=@group.id%> data-event=<%=@event.id%>>
         Finish votation
       </button>
     </div>

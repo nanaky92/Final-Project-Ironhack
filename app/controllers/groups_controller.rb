@@ -77,7 +77,7 @@ class GroupsController < ApplicationController
       flash[:notice] = "You were successfully deleted from group"
     end
 
-    redirect_to root
+    redirect_to "/"
 
   end    
 
@@ -96,7 +96,7 @@ class GroupsController < ApplicationController
       end
     end
 
-    redirect_to root
+    redirect_to "/"
   end
   
   private

@@ -2,7 +2,7 @@ class Event < ApplicationRecord
   belongs_to :group
   has_many :appointments
 
-  def isDeadline?
-    deadline > Time.now
+  def deadlinePassed?
+    Time.now > deadline
   end
 end

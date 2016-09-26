@@ -69,7 +69,7 @@
                 <%= votation.user.name%>
               </div>
               <div class="col-xs-offset-2 col-xs-4 img-rounded light-blue-node" style="margin-top: 1.2em">
-                <%= votation.result%>
+                Form send register
               </div>
             </div>
           <%end%>    
@@ -77,4 +77,13 @@
       </div>
     </div>
   <%end%>    
+
+  <div class="row" style="margin-top: 1em">
+    <%= link_to "Go back to event results", group_event_votations_url(@group.id, @event.id), method: "get"  %>
+  </div>
+
+  <div class="row" style="margin-top: 1em">
+    <%= link_to "Go back to group", group_url(@group.id), method: "get"  %>
+  </div>
+
 </div>
