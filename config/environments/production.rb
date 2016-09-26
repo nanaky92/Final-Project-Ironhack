@@ -57,6 +57,7 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "third_#{Rails.env}"
 
 
+  config.action_mailer.default_url_options = {host: "www.coodle-hackshow.herokuapp.com"}
   config.action_mailer.delivery_method = :smtp
 
   config.action_mailer.smtp_settings = {
