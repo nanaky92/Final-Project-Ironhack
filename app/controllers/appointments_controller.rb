@@ -32,7 +32,10 @@ class AppointmentsController < ApplicationController
     @users_group = @group.users
     @event = Event.find params[:event_id]
     @appointment = Appointment.find(params[:id])
-
+    accessed_app = @appointment.votations.where(access: true)
+    @number_voters = accessed_app ? accessed_app.length : 0
+    number_users = @users_group.length
+    @number_non_voters = number_users - @number_voters
     unless (@appointment.event == @event and @event.group == @group and @users_group.include?(@user))
       render plain: "La matare"
     end
