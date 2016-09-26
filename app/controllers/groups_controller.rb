@@ -17,7 +17,7 @@ class GroupsController < ApplicationController
       flash[:notice] = "Group created successfully"
       @group.users.push(current_user)
       # GroupMailer.welcome(current_user).deliver_later
-      GroupMailer.welcome(current_user).deliver_later
+      GroupMailer.new_group(current_user).deliver_later
       redirect_to group_url(@group.id)
       return
     elsif @admin_id

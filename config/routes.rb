@@ -6,7 +6,11 @@ Rails.application.routes.draw do
     patch "/groups/events/votations/finish", to: "votations#finish", as: "group_event_votation_finish"
   end
 
-  devise_for :users
+  devise_for :users, controllers: {
+    sessions: 'users/sessions',
+    registrations: "users/registrations",
+    passwords: "users/passwords"
+  }
 
   get "/groups/", to: "users#show", as: "show_user"
 
@@ -30,6 +34,5 @@ Rails.application.routes.draw do
   end
 
   root "users#show"
-
 
 end

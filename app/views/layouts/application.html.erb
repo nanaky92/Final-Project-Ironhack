@@ -30,18 +30,22 @@
             </div>
           </div>
 
-          <div class="col-xs-2 col-xs-offset-2 col-sm-2 col-sm-offset-2 col-md-2 col-md-offset-2 col-lg-1 col-lg-offset-3">
-            <ul class="nav navbar-nav margin-navbar">
-                <% if user_signed_in? %>
-                  <!-- <li><%= current_user.name %></li> -->
+          <% if user_signed_in? %>
+      
+            <div class="col-xs-2 col-xs-offset-2 col-sm-2 col-sm-offset-2 col-md-2 col-md-offset-2 col-lg-1 col-lg-offset-3">
+              <ul class="nav navbar-nav margin-navbar">
                   <li><%= link_to 'Log out', destroy_user_session_path, method: 'DELETE' %></li>
-                <% elsif params[:controller].split("/")[0] != "devise" %>
-                      <li><%= link_to 'Sign up', new_user_registration_path %></li>
-                      <li><%= link_to 'Log in', new_user_session_path %></li>
-                <% end %>
+              </ul>
+            </div>
+          <% elsif params[:controller].split("/")[0] != "devise" %>
+            <div class="col-xs-3 col-xs-offset-1 col-md-2 col-md-offset-2">
+              <ul class="nav navbar-nav margin-navbar">          
+                <li><%= link_to 'Sign up', new_user_registration_path %></li>
+                <li><%= link_to 'Log in', new_user_session_path %></li>
+              </ul>
+            </div>
+          <% end %>
 
-            </ul>
-          </div>
 
 
         </div>
