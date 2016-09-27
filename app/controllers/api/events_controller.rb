@@ -5,8 +5,8 @@ class Api::EventsController < ApplicationController
     @event = Event.find(params["event"])
 
     if @group.isUserAdmin?(@user)
-      @appointments = @event.appointments
-      @group.users.each do |user|
+
+      filter_users.each do |user|
         EventMailer.reminder_votation(user, @group, @event).deliver_later
       end
       render json: {
@@ -17,6 +17,16 @@ class Api::EventsController < ApplicationController
         message: "You don't have permission for this",
         }, status: 400 
     end
+  end
+
+  def filter_users
+    @votations = @event.votations.find_by(access: true)
+
+    @users = []
+    @votations.each do |votation|
+      @users.push(votation.user)
+    end
+    return @users
   end
 
 end

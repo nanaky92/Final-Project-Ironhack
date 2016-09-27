@@ -26,23 +26,35 @@
 
           <%@groups.each do |group| %>
 
-            <div class="col-xs-offset-0 col-xs-6 margin-top-valign">
+            <div class="col-xs-offset-0 col-xs-4 margin-top-valign">
               <p><%=link_to( group.name, group_url(group.id), method: "GET" )%></p> 
             </div>
             
             <%if(isUserAdmin?(group.id))%>
 
-              <div class="col-xs-offset-0 col-xs-3 ">
-                <p><%=link_to("Delete group", group_url(group.id), method: "DELETE", class: "btn btn-primary no-link")%></p> 
+              <div class="col-xs-offset-0 col-xs-4 ">
+                <p>
+                  <%=link_to group_url(group.id), method: "DELETE", class: "btn btn-primary no-link" do%>
+                    <span class="glyphicon glyphicon-trash"> Delete</span>
+                  <% end %>
+                </p>
               </div>
-              <div class="col-xs-offset-0 col-xs-3 ">
-                <p><%=link_to("Edit group", edit_group_url(group.id), class: "btn btn-primary no-link")%></p> 
+              <div class="col-xs-offset-0 col-xs-4 ">
+                <p>
+                  <%=link_to edit_group_url(group.id), class: "btn btn-primary no-link" do%>
+                    <span class="glyphicon glyphicon-wrench"> Edit group</span>
+                  <% end %>
+                </p>
               </div>
             
             <%else%>
 
-              <div class="col-xs-offset-0 col-xs-6 ">
-                <p> <%=link_to("Exit group", group_exit_group_url(group.id), method: "DELETE", class: "btn btn-primary no-link")%></p> 
+              <div class="col-xs-offset-2 col-xs-6 ">
+                <p>
+                  <%=link_to group_exit_group_url(group.id), method: "DELETE", class: "btn btn-primary no-link" do%>
+                    <span class="glyphicon glyphicon-remove"> Exit group</span>
+                  <% end %>
+                </p>              
               </div>              
             
             <%end%>
