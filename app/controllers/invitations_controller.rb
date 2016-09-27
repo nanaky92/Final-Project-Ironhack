@@ -40,7 +40,12 @@ class InvitationsController < ApplicationController
       @invitation.delete
       flash[:notice] = "Invitation destroyed"
     end
-    redirect_to groups_url
+
+    if @isUserAdmin
+      redirect_to group_url
+    else
+      redirect_to groups_url
+    end
   end
 
   #destroy invitation, join group, create votations
@@ -87,11 +92,11 @@ class InvitationsController < ApplicationController
         flash[:alert] = "Wrongly formed invitation. Invitation deleted"
         @invitation.delete
         sanitized = false      
-      elsif(current_user != @user && @isUserAdmin)
+      elsif(current_user != @user && !@isUserAdmin)
         flash[:alert] =
           "Access forbidden: Only the recipient of a group or the admin of a group can use an invitation"
         sanitized = false
-      elsif(@group.users.include?(@user) && @isUserAdmin)
+      elsif(@group.users.include?(@user) && !@isUserAdmin)
         flash[:alert] = "User already exists"
         @invitation.delete
         sanitized = false        

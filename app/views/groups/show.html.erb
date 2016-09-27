@@ -80,15 +80,16 @@
           <% if (user != current_user) %>
 
             <div class="row margin">
-              <div class="col-xs-offset-0 col-xs-4" >
+              <div class="col-xs-offset-0 col-xs-4 margin-top-valign" >
                 <%=user.name%>
               </div>
-              <div class="col-xs-offset-0 col-xs-4" >
+              <div class="col-xs-offset-0 col-xs-4 margin-top-valign" >
                 <%=user.email%>
               </div>
 
               <div class="col-xs-offset-0 col-xs-4" >
-                <span><%= link_to "Delete user", group_delete_user_from_group_url(@group.id, user.id), method: "DELETE"%></span>    
+                <span><%= link_to "Delete user", group_delete_user_from_group_url(@group.id, user.id), 
+                method: "DELETE", class: "btn btn-primary no-link"%></span>    
               </div>
             </div>
 
@@ -135,7 +136,7 @@
           <div class="col-xs-offset-0 col-xs-4" >
             <strong> Name </strong>
           </div>
-          <div class="col-xs-offset-1 col-xs-4" >
+          <div class="col-xs-offset-0 col-xs-4" >
             <strong> Deadline </strong>
           </div>
         </div>
@@ -145,18 +146,26 @@
             <div class="col-xs-offset-0 col-xs-4 margin-top-valign" >
               <%=event.name%>
             </div>
-            <div class="col-xs-offset-1 col-xs-4 margin-top-valign" >
+            <div class="col-xs-offset-0 col-xs-4 margin-top-valign" >
               <div class="time-with-time-zone">
                 <%=event.deadline%>
               </div>  
             </div>
           
-            <div class="col-xs-offset-1 col-xs-1" >
+            <div class="col-xs-offset-0 col-xs-1" >
               <span class="pull-right text-right">
                 <%=link_to "Answer", group_event_vote_url(@group.id, event.id), 
                 method: "GET", class: "btn btn-primary", style: "color: white"%>
               </span> 
             </div>          
+
+            <div class="col-xs-offset-1 col-xs-1" >
+              <span class="pull-right text-right">
+                <%=link_to "See results", group_event_url(@group.id, event.id), 
+                method: "GET", class: "btn btn-primary", style: "color: white"%>
+              </span> 
+            </div>          
+
           </div>
         <%end%>
       <%end%>
@@ -187,33 +196,44 @@
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-md-offset-2 col-md-8 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
-        <%@events.each do |event|%>
-          <div class="row margin">
-            <div class="col-xs-offset-0 col-xs-3 margin-top-valign" >
-              <%=event.name%>
-            </div>
-            <div class="col-xs-offset-0 col-xs-3" >
-            <%=link_to "Edit", edit_group_event_url(@group.id, event.id), method: "get", 
-            class: "btn btn-primary", style: "color: white" %>
-            </div>
+    <% if @events.length != 0 %>
+      <div class="row">
+        <div class="col-md-offset-2 col-md-8 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
+          <%@events.each do |event|%>
+            <div class="row margin">
+              <div class="col-xs-offset-0 col-xs-3 margin-top-valign" >
+                <%=event.name%>
+              </div>
+              <div class="col-xs-offset-0 col-xs-3" >
+              <%=link_to "Edit", edit_group_event_url(@group.id, event.id), method: "get", 
+              class: "btn btn-primary", style: "color: white" %>
+              </div>
 
-            <div class="col-xs-offset-0 col-xs-3" >
-              <button class="btn btn-primary btn-finish-votation" data-token=<%= form_authenticity_token %> 
-              data-group=<%=@group.id%> data-event=<%=event.id%>>
-                Finish votation
-              </button>
+              <div class="col-xs-offset-0 col-xs-3" >
+                <button class="btn btn-primary btn-finish-votation" data-token=<%= form_authenticity_token %> 
+                data-group=<%=@group.id%> data-event=<%=event.id%>>
+                  Finish votation
+                </button>
+              </div>
+            
+              <div class="col-xs-offset-0 col-xs-3" >
+              <%=link_to "Delete", group_event_url(@group.id, event.id), method: "delete", 
+              class: "btn btn-primary", style: "color: white" %>
+              </div>
             </div>
-          
-            <div class="col-xs-offset-0 col-xs-3" >
-            <%=link_to "Delete", group_event_url(@group.id, event.id), method: "delete", 
-            class: "btn btn-primary", style: "color: white" %>
-            </div>
-          </div>
-        <%end%>
+          <%end%>
+        </div>
       </div>
-    </div>
+    <% else %>
+      <div class="row margin-top">
+        <div class="col-md-offset-2 col-md-8 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
+          <div class="margin">
+            No events to manage
+          </div> 
+        </div>
+      </div>
+
+    <% end %>
 
     <div class="row margin-top">
       <div class="col-md-offset-3 col-md-6 col-sm-offset-1 col-sm-10 col-xs-offset-1 col-xs-10" >
@@ -221,26 +241,54 @@
       </div>
     </div>
 
+    <%if @invitations.length != 0 %>
 
-    <div class="row">
-      <div class="col-md-offset-2 col-md-8 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
-        <%@invitations.each do |invitation|%>
+      <div class="row">
+        <div class="col-md-offset-2 col-md-8 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
+
           <div class="row margin">
-            <div class="col-xs-offset-0 col-xs-3 margin-top-valign" >
-              <%=invitation.user_id%> to <%=invitation.group_id%>, sent at: 
-              <div class="time-with-time-zone">
-                <%=invitation.created_at%>
-              </div>
+            <div class="col-xs-offset-0 col-xs-5" >
+              <strong> User to Group </strong>
             </div>
-            <div class="col-xs-offset-0 col-xs-3" >
-            <%=link_to "Delete", edit_group_event_url(@group.id, event.id), method: "delete", 
-            class: "btn btn-primary", style: "color: white" %>
+            <div class="col-xs-offset-0 col-xs-4" >
+              <strong> Deadline </strong>
             </div>
-
           </div>
-        <%end%>
+
+
+          <%@invitations.each do |invitation|%>
+            <div class="row margin">
+              <div class="col-xs-offset-0 col-xs-5 margin-top-valign" >
+                <%=invitation.user.name %> to <%=invitation.group.name%>
+              </div>
+              <div class="col-xs-offset-0 col-xs-4 margin-top-valign" >
+                <div class="time-with-time-zone">
+                  <%=invitation.created_at%>
+                </div>
+              </div>
+
+
+              <div class="col-xs-offset-0 col-xs-3" >
+              <%=link_to "Delete invitation", group_delete_invitation_url(@group.id, invitation.id), method: "delete", 
+              class: "btn btn-primary", style: "color: white" %>
+              </div>
+
+            </div>
+          <%end%>
+        </div>
       </div>
-    </div>
+
+    <%else%>
+
+      <div class="row margin-top">
+        <div class="col-md-offset-2 col-md-8 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
+          <div class="margin">
+            No invitations pending
+          </div> 
+        </div>
+      </div>
+    
+    <%end%>
 
   <%end%>
 

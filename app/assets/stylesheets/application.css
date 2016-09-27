@@ -89,3 +89,12 @@ p {
 .time-in-h3{
   font-size: 24px;
 }
+
+.no-link {
+ color: white !important;
+}
+
+a:hover {
+  background-color: inherit; 
+  color: inherit;
+}

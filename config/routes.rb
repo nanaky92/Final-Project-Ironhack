@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     get 'users/:key', to: "users#show"
+    get '/api/groups/events/send_reminders', to: "events#show"    
     patch "/groups/events/votations", to: "votations#update", as: "group_event_votation"
     patch "/groups/events/votations/finish", to: "votations#finish", as: "group_event_votation_finish"
   end
@@ -19,7 +20,7 @@ Rails.application.routes.draw do
 
     resources :invitations, only: [:new, :destroy]
     post "/invitations/:id/", to: "invitations#create"
-    delete "/invitations/:id/delete", to: "invitations#delete"
+    delete "/invitations/:id/delete", to: "invitations#delete", as: "delete_invitation"
 
     resources :events, except: [:index] do
       get "/vote", to: "events#vote", as: "vote"
