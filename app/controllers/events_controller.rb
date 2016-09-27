@@ -19,12 +19,18 @@ class EventsController < ApplicationController
     
     if(@group.isUserAdmin?(current_user))
       @event = Event.create(event_params)
-      redirect_to group_event_appointments_url(params[:group_id], @event.id)
+      redirect_to edit_group_event_url(params[:group_id], @event.id)
     else
       flash[:alert] = "Access forbidden: Only the admin of a group can create events"
       redirect_to group_url(params[:group_id])
     end
   end
+
+  def edit
+    authenticate_admin
+    @appointments = @event.appointments
+  end
+
 
   def show
     @user = current_user
@@ -37,6 +43,8 @@ class EventsController < ApplicationController
       @appointments_votation_map[appointment.id] = appointment.votations.find_by(user_id: @user.id)
     end
     session[:id] = @user.id
+
+    @isUserAdmin = @group.isUserAdmin?(current_user)
   end
 
 
@@ -51,6 +59,16 @@ class EventsController < ApplicationController
         ev_params["deadline(3i)"], ev_params["deadline(4i)"], ev_params["deadline(5i)"])
 
       hash
+    end
+
+    def authenticate_admin
+      @group = Group.find params[:group_id]
+      @event = Event.find params[:id]
+      unless @group.isUserAdmin?(current_user)
+        flash[:alert] = 
+        "Access forbidden: Only the admin of a group can access this"
+        redirect_to group_event_url(params[:group_id], params[:id])
+      end
     end
 
 end

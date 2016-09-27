@@ -1,9 +1,25 @@
 class AppointmentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :authenticate_admin, except: :show
+  before_action :authenticate_admin, except: [:show, :index]
 
   def index
+    @group = Group.find(params[:group_id])
+    @event = Event.find(params[:event_id])
+    @user = current_user
     @appointments = @event.appointments
+
+    max = 0
+    index = 0
+    @appointments_result = {}
+    @appointments.each do |appointment|
+      @appointments_result[appointment.id] = {average: appointment.get_average, number: appointment.get_number_of_voters}
+    end
+
+    @isAdmin = @group.isUserAdmin?(current_user)
+
+    @winner_appointment = Appointment.get_winner(@appointments_result)
+
+    @users_who_wont_come = @winner_appointment.get_users_who_wont_come 
   end
 
   def new
@@ -23,7 +39,7 @@ class AppointmentsController < ApplicationController
       votation = Votation.create(user_id: user.id, appointment_id: @appointment.id, result: 50)
     end
 
-    redirect_to group_event_appointments_url(@group.id, @event.id)
+    redirect_to edit_group_event_url(@group.id, @event.id)
   end
 
   def show

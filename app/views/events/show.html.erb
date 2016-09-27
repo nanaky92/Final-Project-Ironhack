@@ -71,12 +71,19 @@
     </span>
   </div>
 
-  <div class="row" style="margin-top: 1em">
-    <%= link_to "See results", group_event_votations_url(@group.id, @event.id), method: "get"%>
+  <%if @isUserAdmin%>
+    <div class="row margin-top">
+      <%= link_to "Add meetups", edit_group_event_url(@group.id, @event.id), method: "get"%>
+    </div>
+  <%end%>
+
+
+  <div class="row margin-top">
+    <%= link_to "See results", group_event_appointments_url(@group.id, @event.id), method: "get"%>
   </div>
 
 
-  <div class="row" style="margin-top: 1em">
+  <div class="row margin-top">
     <%= link_to "Go back to group", group_url(@group.id), method: "get"  %>
   </div>
 
