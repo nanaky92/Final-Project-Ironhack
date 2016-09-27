@@ -17,7 +17,7 @@ class AppointmentsController < ApplicationController
 
     @isAdmin = @group.isUserAdmin?(current_user)
 
-    @winner_appointment = Appointment.get_winner(@appointments_result)
+    @winner_appointment = Event.get_winner(@appointments_result)
 
     @users_who_wont_come = @winner_appointment.get_users_who_wont_come 
   end
@@ -28,10 +28,13 @@ class AppointmentsController < ApplicationController
 
   def create
     @appointment = Appointment.create(appointment_params)
+    
     if @appointment.id
       flash[:notice] = "Meetup created"
     else
       flash[:alarm] = "Meetup couldn't be created"
+      render :new
+      return
     end
 
     @group = Group.find params[:group_id]
@@ -44,14 +47,17 @@ class AppointmentsController < ApplicationController
 
   def show
     @user = current_user
+
     @group = Group.find params[:group_id]
     @users_group = @group.users
+
     @event = Event.find params[:event_id]
     @appointment = Appointment.find(params[:id])
-    accessed_app = @appointment.votations.where(access: true)
-    @number_voters = accessed_app ? accessed_app.length : 0
+
+    @number_voters = @appointment.get_number_of_voters
     number_users = @users_group.length
     @number_non_voters = number_users - @number_voters
+
     unless (@appointment.event == @event and @event.group == @group and @users_group.include?(@user))
       render plain: "Error"
     end

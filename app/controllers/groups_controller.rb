@@ -2,14 +2,11 @@ class GroupsController < ApplicationController
   before_action :authenticate_user! 
 
   def new
-
     @user = current_user
     @group = Group.new
-    
   end
 
   def create
-
     @admin = Admin.create({user_id: current_user.id})
     @group = Group.create({name: params[:group][:name], admin_id: @admin.id})
 
@@ -29,17 +26,14 @@ class GroupsController < ApplicationController
     end
 
     redirect_to show_user_url
-
   end
 
   def show
-
     @user = current_user
     @group = Group.find(params[:id])
     @users = @group.users
     @isUserAdmin = @group.isUserAdmin?(@user)
     @events = @group.events
-
   end
 
 
@@ -63,7 +57,6 @@ class GroupsController < ApplicationController
   end    
 
   def exit_group  
-
     @group = Group.find(params[:group_id])
 
     if(@group.admin.user == current_user)
@@ -80,7 +73,6 @@ class GroupsController < ApplicationController
     end
 
     redirect_to "/"
-
   end    
 
 

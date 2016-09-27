@@ -47,6 +47,20 @@ class EventsController < ApplicationController
     @isUserAdmin = @group.isUserAdmin?(current_user)
   end
 
+  def destroy
+    authenticate_admin
+    @user = current_user
+
+    @appointments = @event.appointments
+
+    if @event.destroy
+      flash[:notice] = "Event destroyed"
+    else
+      flash[:alert] = "Event couldn't be destroyed"
+    end
+
+    redirect_to group_url(params[:group_id])    
+  end
 
   private
 
