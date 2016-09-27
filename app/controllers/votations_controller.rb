@@ -8,14 +8,18 @@ class VotationsController < ApplicationController
     @user = current_user
     @appointments = @event.appointments
 
+    max = 0
+    index = 0
     @appointments_result = {}
     @appointments.each do |appointment|
-      accessed_app = appointment.votations.where(access: true)
-      number_voters = accessed_app ? accessed_app.length : 0
-      @appointments_result[appointment.id] = 
-        {average: appointment.votations.average(:result), number: number_voters}
+      @appointments_result[appointment.id] = {average: appointment.get_average, number: appointment.get_number_of_voters}
     end
 
     @isAdmin = @group.isUserAdmin?(current_user)
+
+    @winner_appointment = Appointment.get_winner(@appointments_result)
+
+    @users_who_wont_come = @winner_appointment.get_users_who_wont_come 
   end
+
 end
