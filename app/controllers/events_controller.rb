@@ -1,6 +1,21 @@
 class EventsController < ApplicationController
   before_action :authenticate_user! 
 
+
+  def show
+    @group = Group.find(params[:group_id])
+    @event = Event.find(params[:id])
+    @user = current_user
+    @appointments = @event.appointments
+
+    @isAdmin = @group.isUserAdmin?(current_user)
+
+    @event_results = @event.get_results
+    @winner_appointment = @event.get_winner
+
+    @users_who_wont_come = @winner_appointment.get_users_who_wont_come 
+  end
+
   def new
     @group = Group.find(params[:group_id])
 
@@ -21,7 +36,7 @@ class EventsController < ApplicationController
       @event = Event.create(event_params)
       if (@event.id)
         flash[:notice] = "Event created"
-        redirect_to group_event_url(params[:group_id], @event.id)
+        redirect_to group_event_vote_url(params[:group_id], @event.id)
       else
         flash[:alert] = "Error creating event"
         render :new
@@ -40,7 +55,7 @@ class EventsController < ApplicationController
     authenticate_admin
     if @event.update(event_params) 
       flash[:notice] = "Event updated"
-      redirect_to group_event_url(params[:group_id], @event.id)
+      redirect_to group_event_vote_url(params[:group_id], @event.id)
     else
       flash[:alert] = "Error updating event"
       render :edit
@@ -48,10 +63,10 @@ class EventsController < ApplicationController
          
   end
 
-  def show
+  def vote
     @user = current_user
     @group = Group.find(params[:group_id])
-    @event = Event.find(params[:id])
+    @event = Event.find(params[:event_id])
     @appointments = @event.appointments
 
     @appointments_votation_map = {}
@@ -97,7 +112,7 @@ class EventsController < ApplicationController
       unless @group.isUserAdmin?(current_user)
         flash[:alert] = 
         "Access forbidden: Only the admin of a group can access this"
-        redirect_to group_event_url(params[:group_id], params[:id])
+        redirect_to group_event_vote_url(params[:group_id], params[:id])
       end
     end
 

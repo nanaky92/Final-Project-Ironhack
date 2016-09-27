@@ -1,20 +1,6 @@
 class AppointmentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :authenticate_admin, except: [:show, :index]
-
-  def index
-    @group = Group.find(params[:group_id])
-    @event = Event.find(params[:event_id])
-    @user = current_user
-    @appointments = @event.appointments
-
-    @isAdmin = @group.isUserAdmin?(current_user)
-
-    @event_results = @event.get_results
-    @winner_appointment = @event.get_winner
-
-    @users_who_wont_come = @winner_appointment.get_users_who_wont_come 
-  end
+  before_action :authenticate_admin, except: [:show]
 
   def new
     @appointment = Appointment.new
@@ -36,7 +22,7 @@ class AppointmentsController < ApplicationController
       votation = Votation.create(user_id: user.id, appointment_id: @appointment.id, result: 50)
     end
 
-    redirect_to group_event_url(@group.id, @event.id)
+    redirect_to group_event_vote_url(@group.id, @event.id)
   end
 
   def show
@@ -77,7 +63,7 @@ class AppointmentsController < ApplicationController
       unless @group.isUserAdmin?(current_user)
         flash[:alert] = 
         "Access forbidden: Only the admin of a group can access this"
-        redirect_to group_event_url(params[:group_id], params[:event_id])
+        redirect_to group_event_vote_url(params[:group_id], params[:event_id])
       end
     end
 end

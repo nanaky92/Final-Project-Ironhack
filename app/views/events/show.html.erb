@@ -5,107 +5,131 @@
     </div>
   </div>
   
-  <div class="row margin-top-with-header">
+  <div class="row">
     <div class="col-md-offset-3 col-md-6 col-xs-offset-2 col-xs-8" >
       <h4><%=@event.description %></h4>    
     </div>
   </div>
 
 
-  <div class="row margin-top">
-    <div class="col-md-offset-1 col-md-10 img-rounded light-blue-node">
+  <div class="row margin-top-with-header">
+    <div class="col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
       <div class="row margin">
-        <div class="col-xs-offset-0 col-xs-3" >
+        <div class="col-xs-offset-0 col-xs-2" >
           <strong> Action </strong>
         </div>
         <div class="col-xs-offset-0 col-xs-3" >
           <strong> Meeting Place </strong>
         </div>
-        <div class="col-xs-offset-0 col-xs-4" >
+        <div class="col-xs-offset-0 col-xs-3" >
           <strong> Meeting Time </strong>
         </div>
+        <div class="col-xs-offset-0 col-xs-2" >
+          <strong> Result </strong>
+        </div>
+        <div class="col-xs-offset-0 col-xs-2" >
+          <strong> # of votes </strong>
+        </div>
+
       </div>
       
 
       <%@appointments.each do |appointment| %>
-        <div class="row margin">
-          <% #votation = appointment.votations.find_by(user_id: @user.id) %>
-          <% votation = @appointments_votation_map[appointment.id] %>
-          <div class="col-xs-offset-0 col-xs-3 margin-top-votations">
+        <% votation = @event_results[appointment.id] %>
+
+        <%if appointment == @winner_appointment%>
+          <div class="row margin selected-appointment">
+        <%else%>
+          <div class="row margin">
+        <%end%>
+          <div class="col-xs-offset-0 col-xs-2 img-rounded light-blue-node margin-top">
             <%= appointment.action%>
           </div>
-          <div class="col-xs-offset-0 col-xs-3 margin-top-votations">
+          <div class="col-xs-offset-0 col-xs-3 img-rounded light-blue-node margin-top">
             <%= appointment.place%>
           </div>
-          <div class="col-xs-offset-0 col-xs-4 margin-top-votations">
+          <div class="col-xs-offset-0 col-xs-3 img-rounded light-blue-node margin-top">
             <span class="time-with-time-zone"> <%= appointment.time %> </span>
           </div>
-          
-            <div class="col-xs-offset-0 col-xs-2 img-rounded light-blue-node slider-change-color" 
-            data-id=<%=votation.id.to_s%> style="background-color: white">
-                <span>
-                  <span class="value value-from-slider" data-id=<%=votation.id.to_s%> data-group=<%=@group.id.to_s%> 
-                  data-event=<%=@event.id.to_s%>>
-                    <%=votation.result%>
-                  </span>
-                  <input type="range" min="0" max="100" data-id=<%=votation.id.to_s%>>
-                </span>​
-            </div>
-          
-        </div>
-      <%end%>
-      
-      <%if @isUserAdmin%>
-        <div class="row margin">
-          <div class="col-xs-offset-1 col-xs-10">
+          <div class="col-xs-offset-0 col-xs-2 img-rounded light-blue-node margin-top">
             <span>
-              <%= link_to "Add new possible meetup place/action/schedule", 
-              new_group_event_appointment_url(@group.id, @event.id), method: "get"  %>
+              <%= link_to votation[:average], 
+              group_event_appointment_url(@group.id, @event.id, appointment.id), method: "get" %>       
             </span>
           </div>
+          <div class="col-xs-offset-0 col-xs-2 img-rounded light-blue-node margin-top">
+            <span>
+              <%= link_to votation[:number], 
+              group_event_appointment_url(@group.id, @event.id, appointment.id), method: "get" %>
+            </span>
+          </div>         
         </div>
       <%end%>
+    </div>
+  </div>
 
+  <%if(@isAdmin)%>
+    <div class="row margin-top">
+      <div class="col-xs-offset-5 col-xs-2">
+        <button class="btn btn-primary btn-finish-votation" data-token=<%= form_authenticity_token %> 
+        data-group=<%=@group.id%> data-event=<%=@event.id%>>
+          Finish votation
+        </button>
+      </div>
+    </div>
+  <%end%>
+
+
+  <div class="row margin-top-with-header">
+    <div class="col-md-offset-3 col-md-6 col-xs-offset-2 col-xs-8" >
+      <h3> Results </h3>
+    </div>
+  </div>
+  
+  <div class="row margin-top">
+    <div class="col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
+      <h4><strong>Winner: <%= @winner_appointment.action %><strong></h4>    
+
+        <div class="row margin">
+          <div class="col-xs-6 col-xs-offset-3">
+            <%if @users_who_wont_come.length != 0%>
+              <h4><strong>Users who aren't going (voted less than 25)<strong></h4> 
+              <ul class="list-without-style">
+              <%@users_who_wont_come.each do |user|%>
+                <li><%=user.name%></li>
+              <%end%>
+              </ul>
+            <%else%>
+              <h4><strong>Everyboy may come<strong></h4> 
+            <%end%>
+          </div>
+        </div>
     </div>
   </div>
 
   <div class="row margin-top">
-    <div class="col-md-offset-3 col-md-6 col-xs-offset-2 col-xs-8">
+    <div class="col-xs-offset-1 col-xs-10">
       <span>
-        <button class="btn btn-primary btn-send-votation" data-token=<%= form_authenticity_token %>>
-          Send Votation
-        </button>
+        <%= link_to "Go back to event vote", group_event_vote_url(@group.id, @event.id), method: "get" %>
       </span>
-    </div>  
+    </div>
   </div>
 
+
   <div class="row margin-top">
-    <div class="col-md-offset-3 col-md-6 col-xs-offset-2 col-xs-8">
-      <span title="Check this option if you aren't going to an event no matter what">
-        <button class="btn btn-primary btn-not-going hover" data-token=<%= form_authenticity_token %>>
-          Not going
-        </button>
+    <div class="col-xs-offset-1 col-xs-10">
+      <span>
+        <%= link_to "Go back to group", group_url(@group.id), method: "get"  %>
       </span>
-    </div>  
+    </div>
   </div>
 
 
   <div class="row margin-top">
-    <div class="col-md-offset-3 col-md-6 col-xs-offset-2 col-xs-8">
-      <ul class="list-without-style list-inline">
-        <li><%= link_to "See results", group_event_appointments_url(@group.id, @event.id), method: "get"%></li>
-        <li><%= link_to "Go back to group", group_url(@group.id), method: "get"  %></li>
-      </ul>
-    </div>    
-  </div>
-
-
-  <div class="row margin-top">
-      <div class="col-md-4 col-md-offset-4">
+      <div class="col-xs-4 col-xs-offset-4">
         <div class="success-messages light-blue-node img-rounded text-center"></div>
         <div class="error-messages img-rounded text-center alert-color"></div>
       </div>
   </div>
 
 </div>
-

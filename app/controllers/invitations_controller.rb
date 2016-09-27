@@ -31,6 +31,16 @@ class InvitationsController < ApplicationController
     redirect_to new_group_invitation_url(params[:group_id])
   end
 
+  def delete
+    @invitation = Invitation.find(params[:id])
+    @user = User.find(@invitation.user_id)
+    @group = Group.find(@invitation.group_id)
+
+    if destroy_sanitized_input?
+
+    end
+  end
+
   #destroy invitation, join group, create votations
   def destroy
     @invitation = Invitation.find(params[:id])
