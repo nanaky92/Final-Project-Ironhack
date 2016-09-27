@@ -36,9 +36,11 @@ class InvitationsController < ApplicationController
     @user = User.find(@invitation.user_id)
     @group = Group.find(@invitation.group_id)
 
-    if destroy_sanitized_input?
-
+    if destroy_has_sanitized_input?
+      @invitation.delete
+      flash[:notice] = "Invitation destroyed"
     end
+    redirect_to groups_url
   end
 
   #destroy invitation, join group, create votations
@@ -47,7 +49,7 @@ class InvitationsController < ApplicationController
     @user = User.find(@invitation.user_id)
     @group = Group.find(@invitation.group_id)
 
-    if destroy_sanitized_input?
+    if destroy_has_sanitized_input?
       @group.users.push(@user)
       @invitation.delete
       flash[:notice] = "You now belong to " + @group.name
@@ -73,20 +75,23 @@ class InvitationsController < ApplicationController
       obj
     end
 
-    def destroy_sanitized_input?
+    def destroy_has_sanitized_input?
       sanitized = true
+
+      @isUserAdmin = @group.isUserAdmin?(current_user)
+      
       if(@group.id != params[:group_id].to_i)
         flash[:alert] = "Invitation doesn't belong to group"
         sanitized = false
-      elsif !existance?(@invitation) or !existance?(@user) or !existance?(@group)
+      elsif(!existance?(@invitation) || !existance?(@user) || !existance?(@group))
         flash[:alert] = "Wrongly formed invitation. Invitation deleted"
         @invitation.delete
         sanitized = false      
-      elsif(current_user != @user)
+      elsif(current_user != @user && @isUserAdmin)
         flash[:alert] =
-          "Access forbidden: Only the recipient of a group can join the group"
+          "Access forbidden: Only the recipient of a group or the admin of a group can use an invitation"
         sanitized = false
-      elsif @group.users.include?(@user)
+      elsif(@group.users.include?(@user) && @isUserAdmin)
         flash[:alert] = "User already exists"
         @invitation.delete
         sanitized = false        

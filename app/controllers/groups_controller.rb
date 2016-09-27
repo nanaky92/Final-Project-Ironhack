@@ -42,6 +42,7 @@ class GroupsController < ApplicationController
     @users = @group.users
     @isUserAdmin = @group.isUserAdmin?(@user)
     @events = @group.events
+    @invitations = @group.invitations
   end
 
   def edit
@@ -102,7 +103,7 @@ class GroupsController < ApplicationController
       flash[:notice] = "You were successfully deleted from group"
     end
 
-    redirect_to "/"
+    redirect_to groups_url
   end    
 
 
@@ -120,7 +121,7 @@ class GroupsController < ApplicationController
       end
     end
 
-    redirect_to "/"
+    redirect_to groups_url
   end
   
   private
