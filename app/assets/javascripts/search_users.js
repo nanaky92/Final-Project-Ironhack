@@ -9,24 +9,52 @@ function searchUser(event){
 
 function getSearchResults(response){
   var resultsContainer =  document.createDocumentFragment();
+  var col_main = getCol("col-xs-offset-1 col-xs-10");
 
   for (var i = 0; i < response.length; i++) { 
     var button = getButton();
     var auth_token = getAuthToken();
-    var col1 = getCol("col-xs-offset-1 col-xs-4");   
+    var col1 = getCol("col-xs-offset-1 col-xs-4 margin-top-valign");   
     var col2 = getCol("col-xs-offset-2 col-xs-4");  
     col1.textContent = response[i].name;
     col2.appendChild(button);
     col2.appendChild(auth_token);
 
-    var form = getForm(col1, col2, response[i].id);    
-    var row = getRow(form);
+    var form = getForm(getRow(), col1, col2, response[i].id);    
+    var row = getRow();
+    var main_col = getCol("col-xs-offset-1 col-xs-10");
 
-    resultsContainer.appendChild(row);
+    main_col.appendChild(form);
+    row.appendChild(main_col);
+
+    col_main.appendChild(row);
   }
 
+  resultsContainer.appendChild(col_main);
   return resultsContainer;
 }
+
+// function getSearchResults(response){
+//   var resultsContainer =  document.createDocumentFragment();
+
+//   for (var i = 0; i < response.length; i++) { 
+//     var button = getButton();
+//     var auth_token = getAuthToken();
+//     var col1 = getCol("col-xs-offset-1 col-xs-4 margin-top-valign");   
+//     var col2 = getCol("col-xs-offset-2 col-xs-4");  
+//     col1.textContent = response[i].name;
+//     col2.appendChild(button);
+//     col2.appendChild(auth_token);
+
+//     var form = getForm(col1, col2, response[i].id);    
+//     var row = getRow(form);
+
+//     resultsContainer.appendChild(row);
+//   }
+
+//   return resultsContainer;
+// }
+
 
 
 function getCol(formatClass){
@@ -36,11 +64,10 @@ function getCol(formatClass){
   return col;
 }
 
-function getRow(form){
+function getRow(){
   var row = document.createElement("div");
   row.className = "row";
   row.style.margin = "1em"
-  row.appendChild(form);
 
   return row;
 }
@@ -54,15 +81,15 @@ function getButton(){
   return button;
 }
 
-function getForm(col1, col2, id){
+function getForm(row, col1, col2, id){
   var form = document.createElement("form");
 
   form.setAttribute("action", window.location.href.slice(0,-3) + id);        
   form.setAttribute("method", "post");
 
-  form.appendChild(col1);
-  form.appendChild(col2);  
-
+  row.appendChild(col1);
+  row.appendChild(col2);  
+  form.appendChild(row);
   return form;
 }
   

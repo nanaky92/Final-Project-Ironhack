@@ -52,3 +52,40 @@
 .field-margin{
   margin: 2em;
 }
+
+p {
+   font-size: 16px; 
+}
+
+.row {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+}
+.row > [class*='col-'] {
+  display: flex;
+  flex-direction: column;
+}
+
+.margin-top-valign{
+  margin-top: 0.45em;
+}
+
+.margin-top-with-header{
+  margin-top: 3em;
+}
+
+.selected-appointment{
+  font-weight: bold;
+}
+
+.list-without-style{
+  list-style-type:none; 
+  padding:0;
+}
+
+.time-in-h3{
+  font-size: 24px;
+}

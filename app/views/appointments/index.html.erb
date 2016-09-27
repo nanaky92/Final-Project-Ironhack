@@ -5,15 +5,15 @@
     </div>
   </div>
   
-  <div class="row  margin-top">
+  <div class="row">
     <div class="col-md-offset-3 col-md-6 col-xs-offset-2 col-xs-8" >
       <h4><%=@event.description %></h4>    
     </div>
   </div>
 
 
-  <div class="row margin-top">
-    <div class="col-md-offset-1 col-md-10 img-rounded light-blue-node">
+  <div class="row margin-top-with-header">
+    <div class="col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
       <div class="row margin">
         <div class="col-xs-offset-0 col-xs-2" >
           <strong> Action </strong>
@@ -35,26 +35,34 @@
       
 
       <%@appointments.each do |appointment| %>
-        <div class="row" style="margin: 1em">
-          <% votation = @appointments_result[appointment.id] %>
-          <div class="col-xs-offset-0 col-xs-2 img-rounded light-blue-node" style="margin-top: 1.2em">
+        <% votation = @appointments_result[appointment.id] %>
+
+        <%if appointment == @winner_appointment%>
+          <div class="row margin selected-appointment">
+        <%else%>
+          <div class="row margin">
+        <%end%>
+          <div class="col-xs-offset-0 col-xs-2 img-rounded light-blue-node margin-top">
             <%= appointment.action%>
           </div>
-          <div class="col-xs-offset-0 col-xs-3 img-rounded light-blue-node" style="margin-top: 1.2em">
+          <div class="col-xs-offset-0 col-xs-3 img-rounded light-blue-node margin-top">
             <%= appointment.place%>
           </div>
-          <div class="col-xs-offset-0 col-xs-3 img-rounded light-blue-node" style="margin-top: 1.2em">
+          <div class="col-xs-offset-0 col-xs-3 img-rounded light-blue-node margin-top">
             <span class="time-with-time-zone"> <%= appointment.time %> </span>
           </div>
-          <div class="col-xs-offset-0 col-xs-2 img-rounded light-blue-node" style="margin-top: 1.2em">
-            <%= link_to votation[:average], 
-            group_event_appointment_url(@group.id, @event.id, appointment.id), method: "get" %>
+          <div class="col-xs-offset-0 col-xs-2 img-rounded light-blue-node margin-top">
+            <span>
+              <%= link_to votation[:average], 
+              group_event_appointment_url(@group.id, @event.id, appointment.id), method: "get" %>       
+            </span>
           </div>
-          <div class="col-xs-offset-0 col-xs-2 img-rounded light-blue-node" style="margin-top: 1.2em">
-            <%= link_to votation[:number], 
-            group_event_appointment_url(@group.id, @event.id, appointment.id), method: "get" %>
-          </div>
-                    
+          <div class="col-xs-offset-0 col-xs-2 img-rounded light-blue-node margin-top">
+            <span>
+              <%= link_to votation[:number], 
+              group_event_appointment_url(@group.id, @event.id, appointment.id), method: "get" %>
+            </span>
+          </div>         
         </div>
       <%end%>
     </div>
@@ -62,24 +70,26 @@
 
   <%if(@isAdmin)%>
     <div class="row margin-top">
-      <button class="btn btn-primary btn-finish-votation" data-token=<%= form_authenticity_token %> 
-      data-group=<%=@group.id%> data-event=<%=@event.id%>>
-        Finish votation
-      </button>
+      <div class="col-xs-offset-1 col-xs-10">
+        <button class="btn btn-primary btn-finish-votation" data-token=<%= form_authenticity_token %> 
+        data-group=<%=@group.id%> data-event=<%=@event.id%>>
+          Finish votation
+        </button>
+      </div>
     </div>
   <%end%>
 
 
-  <div class="row  margin-top">
-    <div class="col-md-offset-1 col-md-10">
+  <div class="row margin-top">
+    <div class="col-xs-offset-1 col-xs-10">
       <h4><strong>Winner so far: <%= @winner_appointment.action %><strong></h4>    
 
-      <%if @users_who_wont_come.length%>
+      <%if @users_who_wont_come.length != 0%>
         <div class="row margin">
           <div class="col-xs-4 col-xs-offset-4">
 
             <h4><strong>Not going (voted less than 20)<strong></h4> 
-            <ul style="list-style-type:none; padding:0">
+            <ul class="list-without-style">
             <%@users_who_wont_come.each do |user|%>
                 <li><%=user.name%></li>
             <%end%>
@@ -90,13 +100,17 @@
     </div>
   </div>
 
-  <div class="row" style="margin-top: 1em">
-    <%= link_to "Go back to event vote", group_event_url(@group.id, @event.id), method: "get" %>
+  <div class="row margin-top">
+    <div class="col-xs-offset-1 col-xs-10">
+      <%= link_to "Go back to event vote", group_event_url(@group.id, @event.id), method: "get" %>
+    </div>
   </div>
 
 
-  <div class="row" style="margin-top: 1em">
-    <%= link_to "Go back to group", group_url(@group.id), method: "get"  %>
+  <div class="row margin-top">
+    <div class="col-xs-offset-1 col-xs-10">
+      <%= link_to "Go back to group", group_url(@group.id), method: "get"  %>
+    </div>
   </div>
 
 
@@ -108,4 +122,3 @@
   </div>
 
 </div>
-

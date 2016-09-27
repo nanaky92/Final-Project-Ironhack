@@ -1,12 +1,12 @@
 
-<div class="container-fluid text-center">
+<div class="container text-center">
   <div class="row">
     <div class="col-md-offset-3 col-md-6 col-xs-offset-2 col-xs-8" >
       <h3>Group <%=@group.name%></h3>
     </div>
   </div>
   
-  <div class="row" style="margin-top: 3em">
+  <div class="row margin-top-with-header">
     <div class="col-md-offset-3 col-md-6 col-xs-offset-2 col-xs-8" >
       <h3>Group members</h3>    
     </div>
@@ -16,7 +16,7 @@
   <% if (!@isUserAdmin) %>
 
     <div class="row margin-top">
-      <div class="col-md-offset-3 col-md-6 col-sm-offset-2 col-sm-8 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
+      <div class="col-md-offset-2 col-md-8 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
         
         <%@users.each do |user|%>
 
@@ -60,7 +60,7 @@
     </div>
 
     <div class="row margin-top">
-      <div class="col-md-offset-3 col-md-6 col-sm-offset-2 col-sm-8 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
+      <div class="col-md-offset-2 col-md-8 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
         <div class="row margin">
           <div class="col-xs-offset-1 col-xs-4 img-rounded light-blue-node" >
             <%=@group.admin.user.name%>
@@ -74,7 +74,7 @@
 
   <% else %>
     <div class="row margin-top">
-      <div class="col-md-offset-3 col-md-6 col-sm-offset-1 col-sm-10 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
+      <div class="col-md-offset-2 col-md-8 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
         
         <%@users.each do |user|%>
           <% if (user != current_user) %>
@@ -88,7 +88,7 @@
               </div>
 
               <div class="col-xs-offset-0 col-xs-4" >
-                <%= link_to "Delete user", group_delete_user_from_group_url(@group.id, user.id), method: "DELETE"%>
+                <span><%= link_to "Delete user", group_delete_user_from_group_url(@group.id, user.id), method: "DELETE"%></span>    
               </div>
             </div>
 
@@ -122,9 +122,9 @@
   </div>
 
   <div class="row margin-top">
-    <div class="col-md-offset-3 col-md-6 col-sm-offset-1 col-sm-10 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
-      <p class="margin">
-        <%if @events.length == 0%>
+    <div class="col-md-offset-2 col-md-8 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
+      <%if @events.length == 0%>
+        <p class="margin">
           No events. 
           <% if(@isUserAdmin) %>
             <%= link_to "Create your first event", new_group_event_url(@group.id) %>
@@ -138,25 +138,24 @@
           <div class="col-xs-offset-1 col-xs-4" >
             <strong> Deadline </strong>
           </div>
-        
         </div>
-
-
 
         <%@events.each do |event|%>
           <div class="row margin">
-            <div class="col-xs-offset-0 col-xs-4" >
+            <div class="col-xs-offset-0 col-xs-4 margin-top-valign" >
               <%=event.name%>
             </div>
-            <div class="col-xs-offset-1 col-xs-4" >
+            <div class="col-xs-offset-1 col-xs-4 margin-top-valign" >
               <div class="time-with-time-zone">
                 <%=event.deadline%>
               </div>  
             </div>
           
-            <div class="col-xs-2" >
-              <%=link_to "Answer", group_event_url(@group.id, event.id), 
-              method: "GET", class: "btn btn-primary", style: "color: white"%>
+            <div class="col-xs-offset-1 col-xs-1" >
+              <span class="pull-right text-right">
+                <%=link_to "Answer", group_event_url(@group.id, event.id), 
+                method: "GET", class: "btn btn-primary", style: "color: white"%>
+              </span> 
             </div>          
           </div>
         <%end%>
@@ -167,13 +166,14 @@
   </div>
 
   <% if(@isUserAdmin) %>
-
     <div class="row margin-top">
-      <h3> Management panel </h3>
+      <div class="col-md-offset-3 col-md-6 col-sm-offset-1 col-sm-10 col-xs-offset-1 col-xs-10" >
+        <h3>Management panel</h3>
+      </div>
     </div>
 
     <div class="row margin-top">
-      <div class="col-md-offset-3 col-md-6 col-sm-offset-1 col-sm-10 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
+      <div class="col-md-offset-2 col-md-8 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
 
         <p><%= link_to "Invite users", new_group_invitation_url(@group.id), method: "GET" %></p>
         <p><%= link_to "Create event", new_group_event_url(@group.id) %></p>
@@ -182,14 +182,16 @@
     </div>
 
     <div class="row margin-top">
-      <h4> Manage groups </h4>
+      <div class="col-md-offset-3 col-md-6 col-sm-offset-1 col-sm-10 col-xs-offset-1 col-xs-10" >
+        <h4>Manage groups</h4>
+      </div>
     </div>
 
     <div class="row">
-      <div class="col-md-offset-3 col-md-6 col-sm-offset-1 col-sm-10 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
+      <div class="col-md-offset-2 col-md-8 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
         <%@events.each do |event|%>
           <div class="row margin">
-            <div class="col-xs-offset-0 col-xs-3" style="margin-top: 0.3em" >
+            <div class="col-xs-offset-0 col-xs-3 margin-top-valign" >
               <%=event.name%>
             </div>
             <div class="col-xs-offset-0 col-xs-3" >

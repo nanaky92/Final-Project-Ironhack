@@ -5,28 +5,40 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row margin-top-with-header">
     <div class="col-md-offset-3 col-md-6 col-xs-offset-2 col-xs-8 img-rounded light-blue-node">
-    <div class="row">
-        <h3>Find user by name</h3>
-    </div>
+      <div class="row">
+        <div class="col-xs-offset-2 col-xs-8 ">
+          <p>Find user by name</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-offset-3 col-md-6 col-xs-offset-2 col-xs-8">
 
-    <div class="row">
-        <input class="input-name-user" type="text">
-        <!-- <p>Search by email: <input class="input-email-user" type="text"> </p> -->
-        <button class="btn btn-input-user">Submit</button>
+          <input class="input-name-user margin" type="text">
+          <!-- <p>Search by email: <input class="input-email-user" type="text"> </p> -->
+          <button class="btn btn-primary btn-input-user margin">Submit</button>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <div class="row">
+
+
+  <div class="row margin-top">
+    <div class="col-xs-offset-1 col-xs-10">
       <div class="search_results">
-        <p class="length-of-results" style="font-size: 16px"></p>
+        <p class="length-of-results"></p>
         <div class="search-results"></div>
       </div>
     </div>
   </div>
-  <div class="row">
+
+  <div class="row margin-top">
     <div class="col-md-offset-3 col-md-6 col-xs-offset-2 col-xs-8" >
-      <%= link_to "Go back to group", group_url(@group.id), method: "get" %>
+      <span>
+        <%= link_to "Go back to group", group_url(@group.id), method: "get" %>
+      </span>        
     </div>
   </div>
 
