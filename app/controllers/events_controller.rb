@@ -19,7 +19,13 @@ class EventsController < ApplicationController
     
     if(@group.isUserAdmin?(current_user))
       @event = Event.create(event_params)
-      redirect_to edit_group_event_url(params[:group_id], @event.id)
+      if (@event.id)
+        flash[:notice] = "Event created"
+        redirect_to edit_group_event_url(params[:group_id], @event.id)
+      else
+        flash[:alert] = "Error creating event"
+        render :new
+      end
     else
       flash[:alert] = "Access forbidden: Only the admin of a group can create events"
       redirect_to group_url(params[:group_id])

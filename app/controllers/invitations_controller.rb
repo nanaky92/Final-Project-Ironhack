@@ -47,7 +47,7 @@ class InvitationsController < ApplicationController
         end
       end
     end
-    redirect_to show_user_url
+    redirect_to groups_url
   end
 
   private

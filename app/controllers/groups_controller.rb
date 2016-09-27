@@ -1,6 +1,14 @@
 class GroupsController < ApplicationController
   before_action :authenticate_user! 
 
+  def index
+    @user = current_user
+    @groups = @user.groups
+    @invitations = @user.invitations
+    # GroupMailer.welcome(current_user).deliver_now
+  end
+
+
   def new
     @user = current_user
     @group = Group.new
@@ -25,7 +33,7 @@ class GroupsController < ApplicationController
       flash[:alert] = "Neither admin nor group could be created"
     end
 
-    redirect_to show_user_url
+    redirect_to groups_url
   end
 
   def show

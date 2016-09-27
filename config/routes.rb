@@ -12,14 +12,12 @@ Rails.application.routes.draw do
     passwords: "users/passwords"
   }
 
-  get "/groups/", to: "users#show", as: "show_user"
-
-  resources :groups, except: [:index, :edit, :update] do
+  resources :groups, except: [:edit, :update] do
 
     delete "/delete_user/:user_id", to: "groups#delete_user", as: "delete_user_from_group"
     delete "/exit_group", to: "groups#exit_group", as: "exit_group"
 
-    resources :invitations, only: [:new, :destroy, :destroy]
+    resources :invitations, only: [:new, :create, :destroy]
     post "/invitations/:id/", to: "invitations#create"
 
     resources :events, except: [:index, :update] do
@@ -30,9 +28,9 @@ Rails.application.routes.draw do
   end
 
   devise_scope :user do 
-    root "users#show"
+    root "groups#index"
   end
 
-  root "users#show"
+  # root "groups#index"
 
 end

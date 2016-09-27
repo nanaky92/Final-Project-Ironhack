@@ -18,17 +18,17 @@
         
         <%@appointments.each do |appointment|%>
 
-            <div class="row margin">
-              <div class="col-xs-offset-0 col-xs-4" >
-                <strong> <%=appointment.action%> </strong>
-              </div>
-              <div class="col-xs-offset-0 col-xs-4" >
-                <strong> <%=appointment.place%> </strong>
-              </div>
-              <div class="col-xs-offset-0 col-xs-4" >
-                <strong> <span class="time-with-time-zone"> <%=appointment.time%> </span></strong>
-              </div>
+          <div class="row margin">
+            <div class="col-xs-offset-0 col-xs-4" >
+              <strong> <%=appointment.action%> </strong>
             </div>
+            <div class="col-xs-offset-0 col-xs-4" >
+              <strong> <%=appointment.place%> </strong>
+            </div>
+            <div class="col-xs-offset-0 col-xs-4" >
+              <strong> <span class="time-with-time-zone"> <%=appointment.time%> </span></strong>
+            </div>
+          </div>
 
         <%end%>
           <div class="row margin">
