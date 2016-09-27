@@ -13,7 +13,7 @@ class Appointment < ApplicationRecord
 
   def get_users_who_wont_come
     users = []
-    votations.where("result < ?", 20).each do |votation|
+    votations.where("result < ?", 25).each do |votation|
       users.push(votation.user)
     end
     users

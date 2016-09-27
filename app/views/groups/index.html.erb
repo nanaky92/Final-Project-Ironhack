@@ -33,7 +33,8 @@
               </div>
               <div class="col-xs-offset-0 col-xs-6 ">
                 <%if(isUserAdmin?(group.id))%>
-                  <p><%=link_to("Delete group", group_url(group.id), method: "DELETE")%></p> 
+                  <p><%=link_to("Delete group", group_url(group.id), method: "DELETE")%>
+                  <%=link_to("Edit group", edit_group_url(group.id))%></p> 
                 <%else%>
                   <p><%=link_to("Exit group", group_exit_group_url(group.id), method: "DELETE")%></p> 
                 <%end%>

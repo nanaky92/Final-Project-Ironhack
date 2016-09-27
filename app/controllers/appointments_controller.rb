@@ -8,16 +8,10 @@ class AppointmentsController < ApplicationController
     @user = current_user
     @appointments = @event.appointments
 
-    max = 0
-    index = 0
-    @appointments_result = {}
-    @appointments.each do |appointment|
-      @appointments_result[appointment.id] = {average: appointment.get_average, number: appointment.get_number_of_voters}
-    end
-
     @isAdmin = @group.isUserAdmin?(current_user)
 
-    @winner_appointment = Event.get_winner(@appointments_result)
+    @event_results = @event.get_results
+    @winner_appointment = @event.get_winner
 
     @users_who_wont_come = @winner_appointment.get_users_who_wont_come 
   end
@@ -42,7 +36,7 @@ class AppointmentsController < ApplicationController
       votation = Votation.create(user_id: user.id, appointment_id: @appointment.id, result: 50)
     end
 
-    redirect_to edit_group_event_url(@group.id, @event.id)
+    redirect_to group_event_url(@group.id, @event.id)
   end
 
   def show

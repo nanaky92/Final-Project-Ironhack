@@ -44,6 +44,28 @@ class GroupsController < ApplicationController
     @events = @group.events
   end
 
+  def edit
+    @group = Group.find(params[:id])
+  end
+
+  def update
+    @user = current_user
+    @group = Group.find(params[:id])
+
+    if @group.isUserAdmin?(@user)
+      if @group.update(group_params)
+        flash[:notice] = "Group updated"
+        redirect_to group_url(@group.id)
+      else
+        flash[:notice] = "Update failed"  
+        render :edit      
+      end
+    else
+      flash[:alert] = "Only admin can update the group"
+      redirect_to groups_url(@group.id)
+    end
+  end
+
 
   def delete_user
     @group = Group.find(params[:group_id])

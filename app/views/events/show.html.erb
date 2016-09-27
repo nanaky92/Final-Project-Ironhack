@@ -54,6 +54,18 @@
           
         </div>
       <%end%>
+      
+      <%if @isUserAdmin%>
+        <div class="row margin">
+          <div class="col-xs-offset-1 col-xs-10">
+            <span>
+              <%= link_to "Add new possible meetup place/action/schedule", 
+              new_group_event_appointment_url(@group.id, @event.id), method: "get"  %>
+            </span>
+          </div>
+        </div>
+      <%end%>
+
     </div>
   </div>
 
@@ -77,16 +89,10 @@
     </div>  
   </div>
 
-  <%if @isUserAdmin%>
-    <div class="row margin-top">
-    </div>
-  <%end%>
-
 
   <div class="row margin-top">
     <div class="col-md-offset-3 col-md-6 col-xs-offset-2 col-xs-8">
       <ul class="list-without-style list-inline">
-        <li><%= link_to "Add meetups", edit_group_event_url(@group.id, @event.id), method: "get"%></li>
         <li><%= link_to "See results", group_event_appointments_url(@group.id, @event.id), method: "get"%></li>
         <li><%= link_to "Go back to group", group_url(@group.id), method: "get"  %></li>
       </ul>

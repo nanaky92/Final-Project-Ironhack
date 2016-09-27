@@ -21,7 +21,7 @@ class EventsController < ApplicationController
       @event = Event.create(event_params)
       if (@event.id)
         flash[:notice] = "Event created"
-        redirect_to edit_group_event_url(params[:group_id], @event.id)
+        redirect_to group_event_url(params[:group_id], @event.id)
       else
         flash[:alert] = "Error creating event"
         render :new
@@ -34,9 +34,19 @@ class EventsController < ApplicationController
 
   def edit
     authenticate_admin
-    @appointments = @event.appointments
   end
 
+  def update
+    authenticate_admin
+    if @event.update(event_params) 
+      flash[:notice] = "Event updated"
+      redirect_to group_event_url(params[:group_id], @event.id)
+    else
+      flash[:alert] = "Error updating event"
+      render :edit
+    end
+         
+  end
 
   def show
     @user = current_user

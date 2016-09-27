@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     passwords: "users/passwords"
   }
 
-  resources :groups, except: [:edit, :update] do
+  resources :groups do
 
     delete "/delete_user/:user_id", to: "groups#delete_user", as: "delete_user_from_group"
     delete "/exit_group", to: "groups#exit_group", as: "exit_group"
@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     resources :invitations, only: [:new, :create, :destroy]
     post "/invitations/:id/", to: "invitations#create"
 
-    resources :events, except: [:index, :update] do
+    resources :events, except: [:index] do
       resources :appointments, except: [:update, :edit, :destroy]
         # resources :votations, only: [:index]
         # patch "/votations/:data", to: "votations#update", as: "update_votation"
