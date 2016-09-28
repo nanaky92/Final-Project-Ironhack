@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     get 'users/:key', to: "users#show"
-    post '/groups/events/send_reminders', to: "events#show"    
+    post '/groups/events/send_reminders', to: "events#send_reminders"    
     patch "/groups/events/votations", to: "votations#update", as: "group_event_votation"
     patch "/groups/events/votations/finish", to: "votations#finish", as: "group_event_votation_finish"
   end
