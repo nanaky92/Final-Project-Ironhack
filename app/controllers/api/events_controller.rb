@@ -6,16 +6,16 @@ class Api::EventsController < ApplicationController
 
     if @group.isUserAdmin?(@user)
 
-      filter_users.each do |user|
-        EventMailer.reminder_votation(user, @group, @event).deliver_later
-      end
+      # filter_users.each do |user|
+      #   EventMailer.reminder_votation(user, @group, @event).deliver_later
+      # end
       render json: {
         message: "Reminders sent",
         }, status: 200 
-    else
-      render json: {
-        message: "You don't have permission for this",
-        }, status: 400 
+    # else
+    #   render json: {
+    #     message: "You don't have permission for this",
+    #     }, status: 400 
     end
   end
 
