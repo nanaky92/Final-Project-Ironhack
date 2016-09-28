@@ -73,6 +73,7 @@ class EventsController < ApplicationController
     @appointments.each do |appointment|
       @appointments_votation_map[appointment.id] = appointment.votations.find_by(user_id: @user.id)
     end
+    session[:id] = @user.id
 
     @isUserAdmin = @group.isUserAdmin?(current_user)
   end
