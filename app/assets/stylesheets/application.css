@@ -28,9 +28,15 @@
 * {
    font-size: 16px;
    line-height: 1.428;
+   font-family: 'Droid Sans', sans-serif;
+}
+
+.glyphicon > *{
+   font-family: 'Droid Sans', sans-serif;
 }
 
 .light-blue-node {
+  /*background-color: #0099e5;*/
   background-color: #c9e9f6;
 }
 
@@ -71,8 +77,9 @@ p {
   flex-direction: column;
 }
 
-.margin-top-valign{
-  margin-top: 0.45em;
+.valign{
+  /*margin-top: 0.45em;*/
+  margin: auto;
 }
 
 .margin-top-with-header{
@@ -81,6 +88,10 @@ p {
 
 .selected-appointment{
   font-weight: bold;
+}
+
+.not-selected-appointment{
+  font-weight: normal;
 }
 
 .list-without-style{

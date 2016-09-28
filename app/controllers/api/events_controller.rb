@@ -20,6 +20,27 @@ class Api::EventsController < ApplicationController
     end
   end
 
+
+  def send_reminder
+    @user = current_user
+    @group = Group.find(params["group"])
+    @event = Event.find(params["event"])
+
+    if @group.isUserAdmin?(@user)
+
+      @user_to_remind = User.find(params["user"])
+      EventMailer.reminder_votation(@user_to_remind, @group, @event).deliver_later
+
+      render json: {
+        message: "Reminders sent",
+        }, status: 200 
+    else
+      render json: {
+        message: "You don't have permission for this",
+        }, status: 400 
+    end
+  end
+
   def filter_users
 
     @users_to_remind = []

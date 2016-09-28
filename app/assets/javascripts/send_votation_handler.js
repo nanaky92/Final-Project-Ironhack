@@ -13,7 +13,7 @@ function notGoingHandler(){
     data["group"] = inputs[0].dataset.group;
     data["event"] = inputs[0].dataset.event;
 
-    ajaxVotation(inputs, data);
+    ajaxVotation(data);
   }
 
 }
@@ -31,26 +31,12 @@ function sendVotationHandler(){
     data["group"] = inputs[0].dataset.group;
     data["event"] = inputs[0].dataset.event;
 
-    ajaxVotation(inputs, data);
+    ajaxVotation(data);
   }
 }
 
 function ajaxVotation(inputs, data){
+
+  proxy("PATCH", "/api/groups/events/votations/", "json", JSON.stringify(data)).then(paintSuccessMessage).catch(paintFailMessage);
   
-  $.ajax({
-    url: "/api/groups/events/votations/",
-    success: paintSuccessMessage,
-    data: data,
-    error: paintFailMessage,
-    method: "patch"
-  });
 }
-
-    // proxy("post", "/api/groups/events/votations/", "json", JSON.stringify(data)).then(paintSuccessMessage).catch(console.log(response));
-
-    // $.ajax({
-    //   url: "/groups/" + inputs[0].dataset.group + "/events/" + inputs[0].dataset.event + "/votations/" + JSON.stringify(data),
-    //   success: paintSuccessMessage,
-    //   error: function(response){console.log(response)},
-    //   method: "patch"
-    // });

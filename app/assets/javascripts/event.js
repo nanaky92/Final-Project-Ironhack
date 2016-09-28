@@ -17,6 +17,15 @@ function setupInputSliders(){
 function setupButtons(){
   setupVotationButtons();
 
+  var sendReminderButton = document.querySelector(".btn-send-reminder");
+
+  if(sendReminderButton){
+    var data = {"group": sendReminderButton.dataset.group, 
+    "user": sendReminderButton.dataset.user, "event": sendReminderButton.dataset.event};
+    sendReminderButton.addEventListener("click", sendReminderHandler(data));
+  }
+
+
   var sendRemindersButton = document.querySelector(".btn-send-reminders");
 
   if(sendRemindersButton){
@@ -49,25 +58,19 @@ function setupVotationButtons(){
 
 function finishVotationHandler(data){
   return function(){
-    $.ajax({
-      url: "/api/groups/events/votations/finish",
-      success: paintSuccessMessage,
-      error: paintFailMessage,
-      data: data,
-      method: "patch"
-    })
+    proxy("PATCH", "/api/groups/events/finish/", "json", JSON.stringify(data)).then(paintSuccessMessage).catch(paintFailMessage);
   };
 }
 
 function sendRemindersHandler(data){
   return function(){
-    $.ajax({
-      url: "/api/groups/events/send_reminders",
-      success: paintSuccessMessage,
-      error: paintFailMessage,
-      data: data,
-      method: "post"
-    })
+    proxy("POST", "/api/groups/events/send_reminders/", "json", JSON.stringify(data)).then(paintSuccessMessage).catch(paintFailMessage);
+  };
+}
+
+function sendReminderHandler(data){
+  return function(){
+    proxy("POST", "/api/groups/events/send_reminder/", "json", JSON.stringify(data)).then(paintSuccessMessage).catch(paintFailMessage);
   };
 
 }

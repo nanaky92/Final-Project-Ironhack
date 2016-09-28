@@ -5,7 +5,7 @@ function paintSuccessMessage(response){
 }
 
 function paintFailMessage(response){
-  console.log(response.responseJSON.message);
+  // console.log(response);
   document.querySelector(".error-messages").innerHTML = response.responseJSON.message;
   document.querySelector(".success-messages").innerHTML = "";
 }

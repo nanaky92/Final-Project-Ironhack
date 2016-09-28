@@ -30,7 +30,7 @@ class AppointmentsController < ApplicationController
 
     @group = Group.find params[:group_id]
     @users_group = @group.users
-
+    @isAdmin = @group.isUserAdmin?(@user)
     @event = Event.find params[:event_id]
     @appointment = Appointment.find(params[:id])
 

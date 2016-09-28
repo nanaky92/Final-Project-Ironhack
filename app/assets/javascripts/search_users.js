@@ -13,7 +13,7 @@ function getSearchResults(response){
   for (var i = 0; i < response.length; i++) { 
     var button = getButton();
     var auth_token = getAuthToken();
-    var col1 = getCol("col-xs-offset-1 col-xs-4 margin-top-valign");   
+    var col1 = getCol("col-xs-offset-1 col-xs-4 valign");   
     var col2 = getCol("col-xs-offset-2 col-xs-4");  
     col1.textContent = response[i].name;
     col2.appendChild(button);
@@ -52,7 +52,7 @@ function getButton(){
   var button = document.createElement("button");
   button.setAttribute("type", "submit");
   button.textContent = "Send invitation"
-  button.className = "btn btn-primary"
+  button.className = "btn btn-success"
 
   return button;
 }

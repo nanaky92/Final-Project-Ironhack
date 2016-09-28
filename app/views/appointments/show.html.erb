@@ -70,7 +70,10 @@
                 <%= votation.user.name%>
               </div>
               <div class="col-xs-offset-2 col-xs-4">
-                Form send register
+                <button class="btn btn-primary btn-send-reminder" data-token=<%= form_authenticity_token %> 
+                data-group=<%=@group.id%> data-event=<%=@event.id%> data-user=<%=votation.user.id%>>
+                  Send reminder
+                </button>
               </div>
             </div>
           <%end%>    
@@ -94,5 +97,14 @@
       </span>
     </div>
   </div>
+  
+  <%if(@isAdmin)%>  
+    <div class="row margin-top">
+        <div class="col-xs-4 col-xs-offset-4">
+          <div class="success-messages light-blue-node img-rounded text-center"></div>
+          <div class="error-messages img-rounded text-center alert-color"></div>
+        </div>
+    </div>
+  <%end%>
 
 </div>
