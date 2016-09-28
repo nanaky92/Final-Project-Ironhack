@@ -1,15 +1,3 @@
-function paintSuccessMessage(response){
-  document.querySelector(".error-messages").innerHTML = "";
-  document.querySelector(".success-messages").innerHTML = response.message;
-}
-
-function paintFailMessage(response){
-  console.log(response.responseJSON.message);
-  document.querySelector(".error-messages").innerHTML = response.responseJSON.message;
-  document.querySelector(".success-messages").innerHTML = "";
-}
-
-
 function notGoingHandler(){
   var data = {};
   var inputs = document.querySelectorAll(".value-from-slider");

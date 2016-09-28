@@ -13,6 +13,33 @@
 
 
   <div class="row margin-top-with-header">
+    <div class="col-md-offset-3 col-md-6 col-xs-offset-2 col-xs-8" >
+      <h3> Results </h3>
+    </div>
+  </div>
+  
+  <div class="row margin-top">
+    <div class="col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
+      <h4><strong>Winner: <%= @winner_appointment.action %><strong></h4>    
+
+        <div class="row margin">
+          <div class="col-xs-6 col-xs-offset-3">
+            <%if @users_who_wont_come.length != 0%>
+              <h4><strong>Users who aren't going (voted less than 25)<strong></h4> 
+              <ul class="list-without-style">
+              <%@users_who_wont_come.each do |user|%>
+                <li><%=user.name%></li>
+              <%end%>
+              </ul>
+            <%else%>
+              <h4><strong>Everyboy may come<strong></h4> 
+            <%end%>
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="row margin-top-with-header">
     <div class="col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
       <div class="row margin">
         <div class="col-xs-offset-0 col-xs-2" >
@@ -86,34 +113,6 @@
 
     </div>
   <%end%>
-
-
-  <div class="row margin-top-with-header">
-    <div class="col-md-offset-3 col-md-6 col-xs-offset-2 col-xs-8" >
-      <h3> Results </h3>
-    </div>
-  </div>
-  
-  <div class="row margin-top">
-    <div class="col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
-      <h4><strong>Winner: <%= @winner_appointment.action %><strong></h4>    
-
-        <div class="row margin">
-          <div class="col-xs-6 col-xs-offset-3">
-            <%if @users_who_wont_come.length != 0%>
-              <h4><strong>Users who aren't going (voted less than 25)<strong></h4> 
-              <ul class="list-without-style">
-              <%@users_who_wont_come.each do |user|%>
-                <li><%=user.name%></li>
-              <%end%>
-              </ul>
-            <%else%>
-              <h4><strong>Everyboy may come<strong></h4> 
-            <%end%>
-          </div>
-        </div>
-    </div>
-  </div>
 
   <div class="row margin-top">
     <div class="col-xs-offset-1 col-xs-10">
