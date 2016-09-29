@@ -4,6 +4,8 @@ class Group < ApplicationRecord
   has_many :invitations, dependent: :destroy
   has_many :events, dependent: :destroy
 
+  validates_presence_of :name
+
   def isUserAdmin?(current_user)
     current_user == admin.user
   end

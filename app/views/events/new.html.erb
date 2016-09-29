@@ -8,6 +8,17 @@
   <div class="row margin-top-with-header">
     <div class="col-xs-offset-1 col-xs-10 col-md-offset-2 col-md-8 img-rounded light-blue-node">
        <%= form_for(@event, url: group_events_url) do |f| %>
+        <% if @event.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
+
+            <ul>
+            <% @event.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
 
           <div class="field field-margin">
             <%= f.label :name, "Name your event" %>

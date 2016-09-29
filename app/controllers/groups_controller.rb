@@ -25,12 +25,17 @@ class GroupsController < ApplicationController
       GroupMailer.new_group(current_user).deliver_later
       redirect_to group_url(@group.id)
       return
-    elsif @admin_id
-      flash[:alert] = "Group couldn't be created"
-    elsif @group_id
-      flash[:alert] = "Admin couldn't be created"
+    elsif @admin.id
+      # flash[:alert] = "Group couldn't be created"
+      @admin.destroy
+      redirect_to new_group_url
+
+    # elsif @group.id
+    #   flash[:alert] = "Admin couldn't be created"
     else
-      flash[:alert] = "Neither admin nor group could be created"
+      redirect_to new_group_url
+
+      # flash[:alert] = "Neither admin nor group could be created"
     end
 
     redirect_to groups_url
