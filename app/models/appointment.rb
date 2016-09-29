@@ -2,6 +2,10 @@ class Appointment < ApplicationRecord
   belongs_to :event
   has_many :votations, dependent: :destroy
 
+  validates_presence_of :action
+  validates_presence_of :place
+  validates_presence_of :time
+
   def get_average
     votations.average(:result)
   end

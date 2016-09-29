@@ -10,6 +10,11 @@ class User < ApplicationRecord
   has_many :votations, dependent: :destroy
 
   has_many :admins, dependent: :destroy
+
+  validates_presence_of :name
+  validates :password, :format => {:with => /\A(?=.*[a-zA-Z])(?=.*[0-9])\z/, 
+  message: "must include one number and one letter."}
+
   # has_many :groups, :class_name => 'Group', :foreign_key => 'user_id'
   # http://www.spacevatican.org/2008/5/6/creating-multiple-associations-with-the-same-table/
 end

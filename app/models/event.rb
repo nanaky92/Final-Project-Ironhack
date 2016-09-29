@@ -1,7 +1,10 @@
 class Event < ApplicationRecord
   belongs_to :group
   has_many :appointments, dependent: :destroy
-  # has_many :votations, through: :appointments, dependent: :destroy
+  
+  validates_presence_of :name
+  validates_presence_of :deadline
+  validates_presence_of :group_id
 
   def deadlinePassed?
     Time.now > deadline
