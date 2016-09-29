@@ -1,7 +1,7 @@
 class Api::VotationsController < ApplicationController
 
   def update
-    @user = User.find(session[:id])
+    @user = current_user
 
     @group = Group.find(params["group"])
     @event = Event.find(params["event"])
@@ -24,7 +24,7 @@ class Api::VotationsController < ApplicationController
   end
 
   def finish
-    @user = User.find(session[:id])
+    @user = current_user
 
     @group = Group.find(params["group"])
     @event = Event.find(params["event"])

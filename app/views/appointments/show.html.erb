@@ -55,27 +55,38 @@
       <div class="col-md-offset-2 col-md-8 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
 
         <div class="row margin">
-          <div class="col-xs-offset-1 col-xs-4" >
-            <strong> Name </strong>
-          </div>
-          <div class="col-xs-offset-2 col-xs-4" >
-            <strong> Votation </strong>
-          </div>
+          <%if(@isAdmin)%>  
+            <div class="col-xs-offset-1 col-xs-4" >
+              <strong> Name </strong>
+            </div>
+          <%else%>
+            <div class="col-xs-offset-4 col-xs-4" >
+              <strong> Name </strong>
+            </div>
+          <%end%>
         </div>
 
         <% @votations.each do |votation|%>
           <%if votation.access == false %>
-            <div class="row margin">
-              <div class="col-xs-offset-1 col-xs-4">
-                <%= votation.user.name%>
+            <%if(@isAdmin)%>  
+              <div class="row margin">
+                <div class="col-xs-offset-1 col-xs-4">
+                  <%= votation.user.name%>
+                </div>
+                <div class="col-xs-offset-1 col-xs-6 col-sm-offset-2 col-sm-4">
+                  <button class="btn btn-primary btn-send-reminder" data-token=<%= form_authenticity_token %> 
+                  data-group=<%=@group.id%> data-event=<%=@event.id%> data-user=<%=votation.user.id%>>
+                    <span class="glyphicon glyphicon-send"> <span>Send reminder</span></span>
+                  </button>
+                </div>
               </div>
-              <div class="col-xs-offset-2 col-xs-4">
-                <button class="btn btn-primary btn-send-reminder" data-token=<%= form_authenticity_token %> 
-                data-group=<%=@group.id%> data-event=<%=@event.id%> data-user=<%=votation.user.id%>>
-                  Send reminder
-                </button>
+            <%else%>
+              <div class="row margin">
+                <div class="col-xs-offset-4 col-xs-4">
+                  <%= votation.user.name%>
+                </div>
               </div>
-            </div>
+            <%end%>
           <%end%>    
         <%end%>    
       </div>
@@ -97,7 +108,7 @@
       </span>
     </div>
   </div>
-  
+
   <%if(@isAdmin)%>  
     <div class="row margin-top">
         <div class="col-xs-4 col-xs-offset-4">

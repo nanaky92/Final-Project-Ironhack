@@ -14,9 +14,9 @@
           <%= f.text_field :name %>
         </div>
 
-        <div class="actions field-margin">
-          <%= f.submit class: "btn btn-primary" %>
-        </div>
+        <%= button_tag(type: 'submit', class: "btn btn-primary field-margin") do %>
+          <span class="glyphicon glyphicon-plus"> <span>Create Group</span></span> 
+        <% end %>
       <% end %>    
     </div>    
   </div>

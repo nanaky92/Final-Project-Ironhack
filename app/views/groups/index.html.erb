@@ -7,12 +7,12 @@
 
   <div class="row margin-top-with-header">
     <div class="col-xs-offset-4 col-xs-4">
-      <h3>Manage your groups</h3>
+      <h3>Your groups</h3>
     </div>
   </div>
 
   <div class="row margin-top" >
-    <div class="col-md-offset-2 col-md-8 col-xs-offset-1 col-xs-10 light-blue-node img-rounded" >
+    <div class="col-md-offset-3 col-md-6 col-sm-offset-2 col-sm-8 col-xs-offset-1 col-xs-10 light-blue-node img-rounded" >
       <div class="row">
 
         <%if @groups.length == 0%>
@@ -24,53 +24,51 @@
           
         <%else%>
 
-          <%@groups.each do |group| %>
+          <div class="col-xs-12">
 
-            <div class="col-xs-offset-0 col-xs-4 valign">
-              <p><%=link_to( group.name, group_url(group.id), method: "GET" )%></p> 
-            </div>
-            
-            <%if(isUserAdmin?(group.id))%>
-              <div class="col-xs-offset-0 col-xs-4 ">
-                <p>
-                  <%=link_to edit_group_url(group.id), class: "btn btn-warning no-link" do%>
-                    <span class="glyphicon glyphicon-wrench"> <span>Edit group</span></span>
-                  <% end %>
-                </p>
+            <%@groups.each do |group| %>
+              <div class="row">
+                
+                <div class="col-xs-offset-0 col-xs-4 valign">
+                  <p><%=link_to( group.name, group_url(group.id), method: "GET" )%></p> 
+                </div>
+                
+                <%if(isUserAdmin?(group.id))%>
+                  <div class="col-xs-offset-0 col-xs-4 valign">
+                      <%=link_to edit_group_url(group.id), class: "btn btn-warning no-link" do%>
+                        <span class="glyphicon glyphicon-wrench"> <span>Edit group</span></span>
+                      <% end %>
+                  </div>
+
+                  <div class="col-xs-offset-0 col-xs-4 valign">
+                      <%=link_to group_url(group.id), method: "DELETE", class: "btn btn-danger no-link" do%>
+                        <span class="glyphicon glyphicon-trash"> <span>Delete</span></span>
+                      <% end %>
+                  </div>
+                
+                <%else%>
+
+                  <div class="col-xs-offset-0 col-xs-8 valign">
+                      <%=link_to group_exit_group_url(group.id), method: "DELETE", class: "btn btn-danger no-link" do%>
+                        <span class="glyphicon glyphicon-remove"> <span>Exit group</span></span>
+                      <% end %>
+                  </div>              
+                <%end%>
               </div>
 
-              <div class="col-xs-offset-0 col-xs-4 ">
-                <p>
-                  <%=link_to group_url(group.id), method: "DELETE", class: "btn btn-danger no-link" do%>
-                    <span class="glyphicon glyphicon-trash"> <span>Delete</span></span>
-                  <% end %>
-                </p>
-              </div>
-            
-            <%else%>
+             <%end%> <!-- end of groups.each -->
+          </div>
 
-              <div class="col-xs-offset-2 col-xs-6 ">
-                <p>
-                  <%=link_to group_exit_group_url(group.id), method: "DELETE", class: "btn btn-primary no-link" do%>
-                    <span class="glyphicon glyphicon-remove"> <span>Exit group</span></span>
-                  <% end %>
-                </p>              
-              </div>              
-            
-            <%end%>
-
-          <%end%>
-
-        <%end%>
+        <%end%><!-- end of if @groups.length == 0 -->
       </div>
       
-      <div class="row">
+      <div class="row margin">
         <div class="col-md-offset-2 col-md-8 col-xs-offset-1 col-xs-10" >
-            <p>
-              <%=link_to new_group_url do%>
+            
+              <%=link_to new_group_url, class: "btn btn-success no-link" do%>
                 <span class="glyphicon glyphicon-plus"> <span>Create Group</span></span>
               <%end%>
-            </p> 
+            
         </div>
       </div>
     </div>
@@ -78,34 +76,38 @@
 
 
   <div class="row margin-top-with-header" >
-    <div class="col-md-offset-2 col-md-8 col-xs-offset-1 col-xs-10" >
+    <div class="col-md-offset-3 col-md-6 col-sm-offset-2 col-sm-8 col-xs-offset-1 col-xs-10" >
         <h3>Pending invitations</h3>
     </div>
   </div>
   
   <div class="row margin-top" >
-    <div class="col-md-offset-2 col-md-8 col-xs-offset-1 col-xs-10 light-blue-node img-rounded">
+    <div class="col-md-offset-3 col-md-6 col-sm-offset-2 col-sm-8 col-xs-offset-1 col-xs-10 light-blue-node img-rounded">
       <%if @invitations.length == 0 %>
         <p> No pending invitations </p>
       <%else %>
         <%@invitations.each do |invitation| %>
           <div class="row margin">
-            <div class="col-xs-offset-0 col-xs-8 valign">        
+            <div class="col-xs-offset-0 col-xs-5 valign">        
                 <% link_text = invitation.group.admin.user.name + " invited you to " + invitation.group.name%>
                 <span>
                   <%=link_to(link_text, group_invitation_url(invitation.group_id, invitation.id), method: "DELETE" )%>
                 </span>
             </div>
 
-            <div class="col-xs-offset-2 col-xs-2">        
-              <%=link_to("Delete", group_delete_invitation_url(invitation.group_id, invitation.id), method: "DELETE", class: "btn btn-primary" )%>           
+            <div class="col-xs-offset-1 col-xs-6 valign">        
+              <%=link_to group_delete_invitation_url(invitation.group_id, invitation.id), 
+              method: "DELETE", class: "btn btn-danger no-link" do%>  
+                <span class="glyphicon glyphicon-trash"> <span>Refuse Invitation</span></span>  
+              <%end%>       
             </div>          
           </div>
         <%end%>
       <%end%>
     </div>
   </div>
-    
+                            
+
 
 </div>
 

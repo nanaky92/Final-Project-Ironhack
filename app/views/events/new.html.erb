@@ -26,9 +26,9 @@
 
           <%= f.text_field :group_id, :type => :hidden, :input_html => { value: @group.id } %>
 
-          <div class="actions field-margin">
-            <%= f.submit class: "btn btn-primary"%>
-          </div>
+          <%= button_tag(type: 'submit', class: "btn btn-primary field-margin") do %>
+            <span class="glyphicon glyphicon-plus"> <span>Create Event</span></span> 
+          <% end %>
         <% end %>    
     </div>    
   </div>

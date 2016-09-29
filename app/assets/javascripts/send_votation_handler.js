@@ -35,7 +35,7 @@ function sendVotationHandler(){
   }
 }
 
-function ajaxVotation(inputs, data){
+function ajaxVotation(data){
 
   proxy("PATCH", "/api/groups/events/votations/", "json", JSON.stringify(data)).then(paintSuccessMessage).catch(paintFailMessage);
   
