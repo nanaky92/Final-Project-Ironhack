@@ -25,9 +25,9 @@
           <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
           <%= f.password_field :password, autocomplete: "off" %>
           <% if @minimum_password_length %>
-            <br />
-            <em><%= @minimum_password_length %> characters minimum</em>
-          <% end %>
+            <em><br /><%= @minimum_password_length %> characters minimum</em>
+          <% end %><br />
+          <em>Must include one number and one letter</em>
         </div>
 
         <div class="field field-margin">

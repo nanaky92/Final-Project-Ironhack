@@ -15,10 +15,12 @@
 
         <div class="field field-margin">
           <%= f.label :password, "New password" %><br />
-          <% if @minimum_password_length %>
-            <em>(<%= @minimum_password_length %> characters minimum)</em><br />
-          <% end %>
           <%= f.password_field :password, autofocus: true, autocomplete: "off" %>
+          <% if @minimum_password_length %>
+            <em><br /><%= @minimum_password_length %> characters minimum</em>
+          <% end %><br />
+          <em>Must include one number and one letter</em>
+
         </div>
 
         <div class="field field-margin">
