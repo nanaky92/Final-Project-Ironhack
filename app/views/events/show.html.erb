@@ -48,10 +48,10 @@
   <div class="row margin-top">
     <div class="col-md-offset-2 col-md-8 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
       <div class="row margin">
-        <div class="col-xs-offset-0 col-xs-2 valign" >
+        <div class="col-xs-offset-0 col-xs-3 valign" >
           <strong> Action </strong>
         </div>
-        <div class="col-xs-offset-0 col-xs-3 valign" >
+        <div class="col-xs-offset-0 col-xs-2 valign" >
           <strong> Meeting Place </strong>
         </div>
         <div class="col-xs-offset-0 col-xs-3 valign" >
@@ -70,10 +70,14 @@
       <%@appointments.each do |appointment| %>
         <% votation = @event_results[appointment.id] %>
         <div class="row margin">
-          <div class="col-xs-offset-0 col-xs-2 img-rounded light-blue-node valign">
-            <%= appointment.action%>
-          </div>
           <div class="col-xs-offset-0 col-xs-3 img-rounded light-blue-node valign">
+            <%= link_to group_delete_user_from_group_url(@group.id, @user.id), 
+              method: "DELETE" do%>
+                <span class="glyphicon glyphicon-remove"> <span><%=appointment.action%></span></span>
+              <% end %>
+
+          </div>
+          <div class="col-xs-offset-0 col-xs-2 img-rounded light-blue-node valign">
             <%= appointment.place%>
           </div>
           <div class="col-xs-offset-0 col-xs-3 img-rounded light-blue-node valign">
