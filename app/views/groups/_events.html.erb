@@ -15,26 +15,26 @@
       </p>        
     <% else %>
       <div class="row margin">
-        <div class="col-xs-offset-0 col-xs-3" >
+        <div class="col-xs-3" >
           <strong> Name </strong>
         </div>
-        <div class="col-xs-offset-0 col-xs-3 col-sm-4 " >
+        <div class="col-xs-3 col-sm-4 " >
           <strong> Deadline </strong>
         </div>
       </div>
 
       <%@events.each do |event|%>
         <div class="row margin">
-          <div class="col-xs-offset-0 col-xs-3 valign" >
+          <div class="col-xs-3 valign" >
             <%=event.name%>
           </div>
-          <div class="col-xs-offset-0 col-xs-3 col-sm-4 valign" >
+          <div class="col-xs-3 col-sm-4 valign" >
             <div class="time-with-time-zone">
               <%=event.deadline%>
             </div>  
           </div>
         
-          <div class="col-xs-offset-0 col-xs-3 col-sm-2 valign" >
+          <div class="col-xs-3 col-sm-2 valign" >
             <span class="pull-right text-right">
               <%=link_to "Answer", group_event_vote_url(@group.id, event.id), 
               method: "GET", class: "btn btn-primary no-link"%>

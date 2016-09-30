@@ -29,18 +29,18 @@
             <%@groups.each do |group| %>
               <div class="row">
                 
-                <div class="col-xs-offset-0 col-xs-4 valign">
+                <div class="col-xs-4 valign">
                   <p><%=link_to( group.name, group_url(group.id), method: "GET" )%></p> 
                 </div>
                 
                 <%if(isUserAdmin?(group.id))%>
-                  <div class="col-xs-offset-0 col-xs-4 valign">
+                  <div class="col-xs-4 valign">
                       <%=link_to edit_group_url(group.id), class: "btn btn-warning no-link" do%>
                         <span class="glyphicon glyphicon-wrench"> <span>Edit group</span></span>
                       <% end %>
                   </div>
 
-                  <div class="col-xs-offset-0 col-xs-4 valign">
+                  <div class="col-xs-4 valign">
                       <%=link_to group_url(group.id), method: "DELETE", class: "btn btn-danger no-link" do%>
                         <span class="glyphicon glyphicon-trash"> <span>Delete</span></span>
                       <% end %>
@@ -48,7 +48,7 @@
                 
                 <%else%>
 
-                  <div class="col-xs-offset-0 col-xs-8 valign">
+                  <div class="col-xs-8 valign">
                       <%=link_to group_exit_group_url(group.id), method: "DELETE", class: "btn btn-danger no-link" do%>
                         <span class="glyphicon glyphicon-remove"> <span>Exit group</span></span>
                       <% end %>
@@ -88,7 +88,7 @@
       <%else %>
         <%@invitations.each do |invitation| %>
           <div class="row margin">
-            <div class="col-xs-offset-0 col-xs-5 valign">        
+            <div class="col-xs-5 valign">        
                 <% link_text = invitation.group.admin.user.name + " invited you to " + invitation.group.name%>
                 <span>
                   <%=link_to(link_text, group_invitation_url(invitation.group_id, invitation.id), method: "DELETE" )%>

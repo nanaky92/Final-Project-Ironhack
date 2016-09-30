@@ -15,13 +15,13 @@
   <div class="row margin-top">
     <div class="col-md-offset-2 col-md-8 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
       <div class="row margin">
-        <div class="col-xs-offset-0 col-xs-3" >
+        <div class="col-xs-3" >
           <strong> Action </strong>
         </div>
-        <div class="col-xs-offset-0 col-xs-3" >
+        <div class="col-xs-3" >
           <strong> Meeting Place </strong>
         </div>
-        <div class="col-xs-offset-0 col-xs-4" >
+        <div class="col-xs-4" >
           <strong> Meeting Time </strong>
         </div>
       </div>
@@ -31,17 +31,17 @@
         <div class="row margin">
           <% #votation = appointment.votations.find_by(user_id: @user.id) %>
           <% votation = @appointments_votation_map[appointment.id] %>
-          <div class="col-xs-offset-0 col-xs-3 valign">
+          <div class="col-xs-3 valign">
             <%= appointment.action%>
           </div>
-          <div class="col-xs-offset-0 col-xs-3 valign">
+          <div class="col-xs-3 valign">
             <%= appointment.place%>
           </div>
-          <div class="col-xs-offset-0 col-xs-4 valign">
+          <div class="col-xs-4 valign">
             <span class="time-with-time-zone"> <%= appointment.time %> </span>
           </div>
           
-            <div class="col-xs-offset-0 col-xs-2 img-rounded light-blue-node slider-change-color valign" 
+            <div class="col-xs-2 img-rounded light-blue-node slider-change-color valign" 
             data-id=<%=votation.id.to_s%>>
                 <span>
                   <span class="value value-from-slider" data-id=<%=votation.id.to_s%> data-group=<%=@group.id.to_s%> 
@@ -76,7 +76,7 @@
       </button>
     </div>
 
-    <div class="col-xs-offset-0 col-xs-5 col-md-offset-2 col-md-3" title="Check this option if you aren't going to an event no matter what">
+    <div class="col-xs-5 col-md-offset-2 col-md-3" title="Check this option if you aren't going to an event no matter what">
         <button class="btn btn-danger btn-not-going hover" data-token=<%= form_authenticity_token %>>
           <span class="glyphicon glyphicon-remove"> <span>Not going</span> </span>
         </button>

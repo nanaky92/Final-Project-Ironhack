@@ -47,6 +47,10 @@ class AppointmentsController < ApplicationController
     @votations = @appointment.votations
   end
 
+  def destroy
+    # todo
+  end
+
   private
 
     def appointment_params

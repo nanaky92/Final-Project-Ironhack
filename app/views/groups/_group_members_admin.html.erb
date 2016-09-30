@@ -5,14 +5,14 @@
       <% if (user != current_user) %>
 
         <div class="row margin">
-          <div class="col-xs-offset-0 col-xs-4 valign" >
+          <div class="col-xs-4 valign" >
             <%=user.name%>
           </div>
-          <div class="col-xs-offset-0 col-xs-4 valign" >
+          <div class="col-xs-4 valign" >
             <%=user.email%>
           </div>
 
-          <div class="col-xs-offset-0 col-xs-4 valign" >
+          <div class="col-xs-4 valign" >
             <span>
               <%= link_to group_delete_user_from_group_url(@group.id, user.id), 
               method: "DELETE", class: "btn btn-danger no-link" do%>
@@ -25,14 +25,14 @@
       <%else%>
 
         <div class="row margin">
-          <div class="col-xs-offset-0 col-xs-4" >
+          <div class="col-xs-4" >
             <strong> <%=user.name%> </strong> 
           </div>
-          <div class="col-xs-offset-0 col-xs-4" >
+          <div class="col-xs-4" >
             <strong> <%=user.email%> </strong> 
           </div>
 
-          <div class="col-xs-offset-0 col-xs-4" >
+          <div class="col-xs-4" >
             <strong>  Admin </strong> 
           </div>
         </div>

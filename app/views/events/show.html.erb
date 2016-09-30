@@ -48,19 +48,19 @@
   <div class="row margin-top">
     <div class="col-md-offset-2 col-md-8 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
       <div class="row margin">
-        <div class="col-xs-offset-0 col-xs-3 valign" >
+        <div class="col-xs-3 valign" >
           <strong> Action </strong>
         </div>
-        <div class="col-xs-offset-0 col-xs-2 valign" >
+        <div class="col-xs-2 valign" >
           <strong> Meeting Place </strong>
         </div>
-        <div class="col-xs-offset-0 col-xs-3 valign" >
+        <div class="col-xs-3 valign" >
           <strong> Meeting Time </strong>
         </div>
-        <div class="col-xs-offset-0 col-xs-2 valign" >
+        <div class="col-xs-2 valign" >
           <strong> Result </strong>
         </div>
-        <div class="col-xs-offset-0 col-xs-2 valign" >
+        <div class="col-xs-2 valign" >
           <strong> # of votes </strong>
         </div>
 
@@ -70,26 +70,26 @@
       <%@appointments.each do |appointment| %>
         <% votation = @event_results[appointment.id] %>
         <div class="row margin">
-          <div class="col-xs-offset-0 col-xs-3 img-rounded light-blue-node valign">
+          <div class="col-xs-3 img-rounded light-blue-node valign">
             <%= link_to group_delete_user_from_group_url(@group.id, @user.id), 
               method: "DELETE" do%>
                 <span class="glyphicon glyphicon-remove"> <span><%=appointment.action%></span></span>
               <% end %>
 
           </div>
-          <div class="col-xs-offset-0 col-xs-2 img-rounded light-blue-node valign">
+          <div class="col-xs-2 img-rounded light-blue-node valign">
             <%= appointment.place%>
           </div>
-          <div class="col-xs-offset-0 col-xs-3 img-rounded light-blue-node valign">
+          <div class="col-xs-3 img-rounded light-blue-node valign">
             <span class="time-with-time-zone"> <%= appointment.time %> </span>
           </div>
-          <div class="col-xs-offset-0 col-xs-2 img-rounded light-blue-node valign">
+          <div class="col-xs-2 img-rounded light-blue-node valign">
             <span>
               <%= link_to votation[:average], 
               group_event_appointment_url(@group.id, @event.id, appointment.id), method: "get" %>       
             </span>
           </div>
-          <div class="col-xs-offset-0 col-xs-2 img-rounded light-blue-node valign">
+          <div class="col-xs-2 img-rounded light-blue-node valign">
             <span>
               <%= link_to votation[:number], 
               group_event_appointment_url(@group.id, @event.id, appointment.id), method: "get" %>
@@ -111,7 +111,7 @@
         </button>
       </div>
 
-      <div class="col-xs-offset-0 col-xs-5 col-md-offset-2 col-md-3">
+      <div class="col-xs-5 col-md-offset-2 col-md-3">
         <button class="btn btn-success btn-finish-votation" data-token=<%= form_authenticity_token %> 
         data-group=<%=@group.id%> data-event=<%=@event.id%>>
           <span class="glyphicon glyphicon-ok"> <span>Finish votation</span></span>
