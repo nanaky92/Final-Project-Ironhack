@@ -48,7 +48,9 @@ class AppointmentsController < ApplicationController
   end
 
   def destroy
-    # todo
+    @appointment = Appointment.find(params[:id])
+    @appointment.destroy
+    redirect_to group_event_url(@group.id, @event.id)
   end
 
   private

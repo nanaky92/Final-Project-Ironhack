@@ -25,7 +25,7 @@ Rails.application.routes.draw do
 
     resources :events, except: [:index] do
       get "/vote", to: "events#vote", as: "vote"
-      resources :appointments, except: [:index, :update, :edit, :destroy]
+      resources :appointments, except: [:index, :update, :edit]
     end
   end
 

@@ -71,11 +71,13 @@
         <% votation = @event_results[appointment.id] %>
         <div class="row margin">
           <div class="col-xs-3 img-rounded light-blue-node valign">
-            <%= link_to group_delete_user_from_group_url(@group.id, @user.id), 
-              method: "DELETE" do%>
+            <% if @isAdmin %>
+              <%= link_to group_event_appointment_url(@group.id, @event.id, appointment.id), method: "DELETE" do%>
                 <span class="glyphicon glyphicon-remove"> <span><%=appointment.action%></span></span>
               <% end %>
+            <% else %>
 
+            <% end %>
           </div>
           <div class="col-xs-2 img-rounded light-blue-node valign">
             <%= appointment.place%>
