@@ -7,33 +7,9 @@
 
   <div class="row margin-top-with-header">
     <div class="col-md-offset-2 col-md-8 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
-       <%= form_for(@appointment, url: group_event_appointments_url) do |f| %>
-
-          <div class="field field-margin">
-            <%= f.label :action, "What do you want to do?" %>
-            <%= f.text_field :action %>
-          </div>
-
-          <div class="field field-margin">
-            <%= f.label :place, "Where? - Select place"  %>
-            <%= f.text_field :place %>
-          </div>
-
-          Time
-          <div class="field  field-margin">
-            <%= f.label :time, "When? - Select time" %>
-            <%= f.datetime_select :time, {:default => Time.now}, { class: "btn" } %>
-          </div>
-
-          <%= f.text_field :event_id, :type => :hidden, value: @event.id %>
-
-          <div class="actions field-margin">
-            <%= f.submit class: "btn btn-primary"%>
-          </div>
-        <% end %>    
+      <%= render partial: 'form', 
+        locals: {button_icon: 'glyphicon-plus', url: group_event_appointments_url, button_caption: 'Create Appointment'}%>
     </div>    
   </div>
  
-      </div>
-  </div>
 </div>

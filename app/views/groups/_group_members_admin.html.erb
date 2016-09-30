@@ -1,0 +1,46 @@
+<div class="row margin-top">
+  <div class="col-md-offset-2 col-md-8 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
+    
+    <%@users.each do |user|%>
+      <% if (user != current_user) %>
+
+        <div class="row margin">
+          <div class="col-xs-offset-0 col-xs-4 valign" >
+            <%=user.name%>
+          </div>
+          <div class="col-xs-offset-0 col-xs-4 valign" >
+            <%=user.email%>
+          </div>
+
+          <div class="col-xs-offset-0 col-xs-4 valign" >
+            <span>
+              <%= link_to group_delete_user_from_group_url(@group.id, user.id), 
+              method: "DELETE", class: "btn btn-danger no-link" do%>
+                <span class="glyphicon glyphicon-trash"> <span>Delete user</span></span>
+              <% end %>
+
+            </span>    
+          </div>
+        </div>
+
+      <%else%>
+
+        <div class="row margin">
+          <div class="col-xs-offset-0 col-xs-4" >
+            <strong> <%=user.name%> </strong> 
+          </div>
+          <div class="col-xs-offset-0 col-xs-4" >
+            <strong> <%=user.email%> </strong> 
+          </div>
+
+          <div class="col-xs-offset-0 col-xs-4" >
+            <strong>  Admin </strong> 
+          </div>
+        </div>
+
+      <%end%>
+
+    <%end%>
+
+  </div>
+</div>

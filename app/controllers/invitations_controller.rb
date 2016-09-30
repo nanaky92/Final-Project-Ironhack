@@ -1,5 +1,5 @@
 class InvitationsController < ApplicationController
-  # before_action :authenticate_user! 
+  before_action :authenticate_user! 
 
   #invite user to group
   def new
@@ -13,7 +13,6 @@ class InvitationsController < ApplicationController
         "Access forbidden: Only the admin of a group can invite people to the group"
       redirect_to group_url(params[:group_id])
     end
-    # render plain: "Invite user"
   end    
 
   def create
@@ -31,6 +30,7 @@ class InvitationsController < ApplicationController
     redirect_to new_group_invitation_url(params[:group_id])
   end
 
+  #destroy invitation without joining group
   def delete
     @invitation = Invitation.find(params[:id])
     @user = User.find(@invitation.user_id)

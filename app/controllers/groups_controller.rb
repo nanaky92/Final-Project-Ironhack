@@ -5,7 +5,6 @@ class GroupsController < ApplicationController
     @user = current_user
     @groups = @user.groups
     @invitations = @user.invitations
-    # GroupMailer.welcome(current_user).deliver_now
   end
 
 
@@ -21,21 +20,15 @@ class GroupsController < ApplicationController
     if @admin.id && @group.id
       flash[:notice] = "Group created successfully"
       @group.users.push(current_user)
-      # GroupMailer.welcome(current_user).deliver_later
-      GroupMailer.new_group(current_user).deliver_later
+      # GroupMailer.new_group(current_user).deliver_later
       redirect_to group_url(@group.id)
       return
-    elsif @admin.id
-      # flash[:alert] = "Group couldn't be created"
-      @admin.destroy
-      redirect_to new_group_url
-
-    # elsif @group.id
-    #   flash[:alert] = "Admin couldn't be created"
     else
+      if @admin.id
+        @admin.destroy
+      end
       redirect_to new_group_url
-
-      # flash[:alert] = "Neither admin nor group could be created"
+      # render :new
     end
 
     redirect_to groups_url

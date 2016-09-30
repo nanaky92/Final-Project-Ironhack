@@ -14,6 +14,7 @@ class AppointmentsController < ApplicationController
     else
       flash[:alarm] = "Meetup couldn't be created"
       render :new
+      # redirect_to new_group_event_appointment_url(@group.id, @event.id)
       return
     end
 
@@ -39,7 +40,8 @@ class AppointmentsController < ApplicationController
     @number_non_voters = number_users - @number_voters
 
     unless (@appointment.event == @event and @event.group == @group and @users_group.include?(@user))
-      render plain: "Error"
+      flash[:alarm] = "Error on show"
+      redirect_to group_event_url(@group.id, @event.id)
     end
 
     @votations = @appointment.votations

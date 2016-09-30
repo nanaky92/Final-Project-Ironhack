@@ -6,6 +6,14 @@ class Appointment < ApplicationRecord
   validates_presence_of :place
   validates_presence_of :time
 
+  validate :time_cannot_be_in_the_past
+
+  def time_cannot_be_in_the_past
+    if time.present? && time < Time.now
+      errors.add(:time, "can't be in the past")
+    end
+  end    
+
   def get_average
     votations.average(:result)
   end

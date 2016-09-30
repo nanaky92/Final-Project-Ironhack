@@ -7,32 +7,9 @@
 
   <div class="row margin-top-with-header">
     <div class="col-xs-offset-1 col-xs-10 col-md-offset-2 col-md-8 img-rounded light-blue-node">
-       <%= form_for(@event, url: group_event_url) do |f| %>
-
-          <div class="field field-margin">
-            <%= f.label :name, "Name your event" %>
-            <%= f.text_field :name %>
-          </div>
-
-          <div class="field field-margin">
-            <%= f.label :description %>
-            <%= f.text_field :description %>
-          </div>
-
-          <div class="field field-margin">
-            <%= f.label :deadline, "Deadline for voting" %>
-            <%= f.datetime_select :deadline, {:default => Time.now}, { class: "btn" } %>
-          </div>
-
-          <%= f.text_field :group_id, :type => :hidden, :input_html => { value: @group.id } %>
-
-          <%= button_tag(type: 'submit', class: "btn btn-primary field-margin") do %>
-            <span class="glyphicon glyphicon-floppy-disk"> <span>Update Event</span></span> 
-          <% end %>
-        <% end %>    
+      <%= render partial: 'form', 
+        locals: {button_icon: 'glyphicon-floppy-disk', url: group_event_url, button_caption: 'Update Event'}%>
     </div>    
   </div>
  
-      </div>
-  </div>
 </div>

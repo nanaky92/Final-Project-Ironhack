@@ -7,27 +7,8 @@
 
   <div class="row margin-top-with-header">
     <div class="col-md-offset-2 col-md-8 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
-      <%= form_for(@group) do |f| %>
-      <% if @group.errors.any? %>
-          <div id="error_explanation">
-            <h2><%= pluralize(@group.errors.count, "error") %> prohibited this group from being saved:</h2>
-
-            <ul> 
-            <% @group.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
-            </ul>
-          </div>
-        <% end %>
-        <div class="field field-margin">
-          <%= f.label :name, "Name your new group" %>
-          <%= f.text_field :name %>
-        </div>
-
-        <%= button_tag(type: 'submit', class: "btn btn-primary field-margin") do %>
-          <span class="glyphicon glyphicon-plus"> <span>Create Group</span></span> 
-        <% end %>
-      <% end %>    
+        <%= render partial: 'form', 
+          locals: {button_icon: 'glyphicon-plus', button_caption: 'Create Group'}%>
     </div>    
   </div>
 </div>

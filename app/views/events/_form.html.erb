@@ -1,0 +1,38 @@
+<%= form_for(@event, url: url) do |f| %>
+  <% if @event.errors.any? %>
+    <div class="row">
+      <div class="valign">
+        <div id="error_explanation" class="field-margin">
+          <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
+
+          <p class="list-without-style">
+            <% @event.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="field field-margin">
+    <%= f.label :name, "Name your event" %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="field field-margin">
+    <%= f.label :description %>
+    <%= f.text_field :description %>
+  </div>
+
+  <div class="field field-margin">
+    <%= f.label :deadline, "Deadline for voting" %>
+    <%= f.datetime_select :deadline, {:default => Time.now}, { class: "btn" } %>
+  </div>
+
+  <%= f.text_field :group_id, :type => :hidden, :input_html => { value: @group.id } %>
+
+  <%= button_tag(type: 'submit', class: "btn btn-primary field-margin") do %>
+    <span class="glyphicon <%=button_icon%>"> <span><%=button_caption%></span></span> 
+  <% end %>
+<% end %> 

@@ -1,0 +1,58 @@
+
+  <div class="row">
+    <div class="col-md-offset-3 col-md-6 col-sm-offset-1 col-sm-10 col-xs-offset-1 col-xs-10" >
+      <h3>Events</h3>
+    </div>
+  </div>
+
+  <div class="row margin-top">
+    <div class="col-md-offset-2 col-md-8 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
+      <%if @events.length == 0%>
+        <p class="margin">
+          No events. 
+          <% if(@isUserAdmin) %>
+            <%= link_to "Create your first event", new_group_event_url(@group.id) %>
+          <%end%>  
+        </p>        
+      <% else %>
+        <div class="row margin">
+          <div class="col-xs-offset-0 col-xs-3" >
+            <strong> Name </strong>
+          </div>
+          <div class="col-xs-offset-0 col-xs-3 col-sm-4 " >
+            <strong> Deadline </strong>
+          </div>
+        </div>
+
+        <%@events.each do |event|%>
+          <div class="row margin">
+            <div class="col-xs-offset-0 col-xs-3 valign" >
+              <%=event.name%>
+            </div>
+            <div class="col-xs-offset-0 col-xs-3 col-sm-4 valign" >
+              <div class="time-with-time-zone">
+                <%=event.deadline%>
+              </div>  
+            </div>
+          
+            <div class="col-xs-offset-0 col-xs-3 col-sm-2 valign" >
+              <span class="pull-right text-right">
+                <%=link_to "Answer", group_event_vote_url(@group.id, event.id), 
+                method: "GET", class: "btn btn-primary no-link"%>
+              </span> 
+            </div>          
+
+            <div class="col-xs-3 col-sm-2 valign" >
+              <span class="pull-right text-right">
+                <%=link_to "See results", group_event_url(@group.id, event.id), 
+                method: "GET", class: "btn btn-primary no-link"%>
+              </span> 
+            </div>          
+
+          </div>
+        <%end%>
+      <%end%>
+
+
+    </div>
+  </div>

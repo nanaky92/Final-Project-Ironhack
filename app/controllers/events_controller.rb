@@ -11,9 +11,16 @@ class EventsController < ApplicationController
     @isAdmin = @group.isUserAdmin?(current_user)
 
     @event_results = @event.get_results
-    @winner_appointment = @event.get_winner
+    winner_id = @event.get_winner_id
 
-    @users_who_wont_come = @winner_appointment.get_users_who_wont_come 
+    if winner_id == -1
+      flash[:alert] = "Empty event. Please add a meetup before seeing the results"
+      redirect_to group_event_vote_url(@group.id, @event.id)
+    else
+      @winner_appointment = Appointment.find(winner_id)
+      @users_who_wont_come = @winner_appointment.get_users_who_wont_come 
+    end
+
   end
 
   def new
@@ -26,7 +33,6 @@ class EventsController < ApplicationController
       flash[:alert] = "Access forbidden: Only the admin of a group can create an event in the group"
       redirect_to group_url(params[:group_id])
     end
-    # render plain: "Invite user"
   end 
 
   def create
@@ -40,6 +46,7 @@ class EventsController < ApplicationController
       else
         flash[:alert] = "Error creating event"
         render :new
+        # redirect_to new_group_event_url(@group.id)
       end
     else
       flash[:alert] = "Access forbidden: Only the admin of a group can create events"
@@ -57,7 +64,7 @@ class EventsController < ApplicationController
       flash[:notice] = "Event updated"
       redirect_to group_event_vote_url(params[:group_id], @event.id)
     else
-      flash[:alert] = "Error updating event"
+      # redirect_to edit_group_event_url(@group.id, @event.id)
       render :edit
     end
          

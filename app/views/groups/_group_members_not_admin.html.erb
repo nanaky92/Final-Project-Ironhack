@@ -1,0 +1,56 @@
+<div class="row margin-top">
+  <div class="col-md-offset-2 col-md-8 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
+    
+    <%@users.each do |user|%>
+
+      <%if user == @group.admin.user%>
+        <%next%>
+      <%end%>
+
+      <%if user == current_user%>
+
+        <div class="row margin">
+          <div class="col-xs-offset-1 col-xs-4 img-rounded light-blue-node" >
+            <strong> <%=user.name%> </strong>
+          </div>
+          <div class="col-xs-offset-2 col-xs-4 img-rounded light-blue-node" >
+            <strong> <%=user.email%> </strong>
+          </div>
+        </div>
+
+      <%else%>
+
+        <div class="row margin">
+          <div class="col-xs-offset-1 col-xs-4 img-rounded light-blue-node" >
+            <%=user.name%>
+          </div>
+          <div class="col-xs-offset-2 col-xs-4 img-rounded light-blue-node" >
+            <%=user.email%>
+          </div>
+        </div>
+
+      <%end%>
+
+    <%end%>
+
+  </div>
+</div>
+  
+<div class="row">
+  <div class="col-md-offset-3 col-md-6 col-sm-offset-2 col-sm-8 col-xs-offset-1 col-xs-10" >
+    <h3>Admin</h3>
+  </div>
+</div>
+
+<div class="row margin-top">
+  <div class="col-md-offset-2 col-md-8 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
+    <div class="row margin">
+      <div class="col-xs-offset-1 col-xs-4 img-rounded light-blue-node" >
+        <%=@group.admin.user.name%>
+      </div>
+      <div class="col-xs-offset-2 col-xs-4 img-rounded light-blue-node" >
+        <%=@group.admin.user.email%>
+      </div>
+    </div>
+  </div>
+</div>

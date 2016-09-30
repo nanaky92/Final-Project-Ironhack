@@ -7,18 +7,8 @@
 
   <div class="row margin-top-with-header">
     <div class="col-md-offset-2 col-md-8 col-xs-offset-1 col-xs-10 img-rounded light-blue-node">
-      <%= form_for(@group) do |f| %>
-
-        <div class="field field-margin">
-          <%= f.label :name, "Rename your group" %>
-          <%= f.text_field :name %>
-        </div>
-
-        <%= button_tag(type: 'submit', class: "btn btn-primary field-margin") do %>
-          <span class="glyphicon glyphicon-floppy-disk"> <span>Update Group</span></span> 
-        <% end %>
-
-      <% end %>    
+        <%= render partial: 'form', 
+          locals: {button_icon: 'glyphicon-floppy-disk', button_caption: 'Update Group'}%>
     </div>    
   </div>
 </div>

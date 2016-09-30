@@ -1,0 +1,38 @@
+<%= form_for(@appointment, url: url) do |f| %>
+  <% if @appointment.errors.any? %>
+    <div class="row">
+      <div class="valign">
+        <div id="error_explanation" class="field-margin">
+          <h2><%= pluralize(@appointment.errors.count, "error") %> prohibited this appointment from being saved:</h2>
+
+          <p class="list-without-style">
+            <% @appointment.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="field field-margin">
+    <%= f.label :action, "What do you want to do?" %>
+    <%= f.text_field :action %>
+  </div>
+
+  <div class="field field-margin">
+    <%= f.label :place, "Where? - Select place"  %>
+    <%= f.text_field :place %>
+  </div>
+
+  <div class="field  field-margin">
+    <%= f.label :time, "When? - Select time" %>
+    <%= f.datetime_select :time, {:default => Time.now}, { class: "btn" } %>
+  </div>
+
+  <%= f.text_field :event_id, :type => :hidden, value: @event.id %>
+
+  <%= button_tag(type: 'submit', class: "btn btn-primary field-margin") do %>
+    <span class="glyphicon <%=button_icon%>"> <span><%=button_caption%></span></span> 
+  <% end %>
+<% end %>    
